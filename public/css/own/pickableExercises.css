@@ -1,0 +1,16 @@
+body {
+    background-color: #292b3a ;
+
+}
+h1 {
+    color: #bfc0c0;
+}
+.picker{
+    background-color: #333649;
+    color: #cbd8d8;
+}
+
+.picker:hover {
+    background-color: #40445c;
+
+}

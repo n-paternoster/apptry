@@ -1,11 +1,16 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const mongoose = require("mongoose");
+const helmet = require("helmet");
+const { body, validationResult } = require('express-validator');
 
+
+
+//Alles DatenBank
+const mongoose = require("mongoose");
 const Exercise = require("./models/exercise");
 const Daten = require("./models/daten");
-
+// mongoose.connect('mongodb+srv://Pada:6GQrOMWTsgC6dSI8@cluster0.vncly.mongodb.net/myFirstDatabase?retryWrites=true&w=majority') Hier für online Datenbank(Server IP Whitelisten)
 mongoose.connect('mongodb://localhost:27017/Trackerv5')
     .then(() => {
         console.log("Mongo Connection Open")
@@ -19,7 +24,7 @@ mongoose.connect('mongodb://localhost:27017/Trackerv5')
 
 
 
-
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

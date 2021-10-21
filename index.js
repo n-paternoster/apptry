@@ -88,7 +88,7 @@ app.post("/Datenbank/newData", async (req, res) => {
 })
 
 app.post("/Datenbank/newExercise", async (req, res) => {
-    console.log("das der Body")
+
     console.log(req.body)
 
     const newExercise = new Exercise(req.body)
@@ -99,6 +99,23 @@ app.post("/Datenbank/newExercise", async (req, res) => {
 
 })
 
+app.post("/Datenbank/selectExercise", async (req, res) => {
+
+    const key = Object.keys(JSON.stringify(req.body));
+    const selected = Object.values(JSON.stringify(req.body));
+    console.log(selected);
+    console.log(key);
+    // const selectedExercises = await Exercise.find({
+    //     selected, basicExercise: true
+    // })
+    // const newExercise = new Exercise(req.body)
+    // await newExercise.save();
+    // console.log("Das ist die neue uebung")
+    // console.log(newExercise)
+
+    console.log(selectedExercises);
+
+})
 
 app.get('/Exercises', (req, res) => {
     res.render("pickableExercises")

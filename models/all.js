@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 
-
-
-
-
 const ExerciseSchema = new mongoose.Schema({
 
     exerciseName: String,
@@ -25,7 +21,9 @@ const DatenSchema = new mongoose.Schema({
 
     exerciseSet: Number,
 
-    basicExercise: Boolean
+    basicExercise: Boolean,
+
+    exerciseDate: Date,
 })
 
 const Daten = mongoose.model("Daten", ExerciseSchema);

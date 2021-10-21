@@ -8,6 +8,34 @@ const makenewSet = document.querySelectorAll('.addOneSet');
 
 const addExercises = document.querySelectorAll('.addExercise');
 
+const selectExercise = document.querySelectorAll('.selectExerc');
+
+for (let obj of selectExercise) {
+    obj.addEventListener('click', (evt) => {
+        let selType = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
+        let dataObject = { exerciseType: selType }
+
+
+        axios({
+            method: 'post',
+            url: '/Datenbank/selectExercise',
+            data: dataObject,
+            headers: {
+                'Content-Type': 'application/json'
+
+            }
+        })
+            .then((response) => {
+                console.log(response.data);
+            }, (error) => {
+                console.log(error);
+            });
+
+
+    })
+}
+
+
 
 
 for (let obj of addExercises) {

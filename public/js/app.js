@@ -9,35 +9,55 @@ const makenewSet = document.querySelectorAll('.addOneSet');
 const addExercises = document.querySelectorAll('.addExercise');
 
 const selectExercise = document.querySelectorAll('.selectExerc');
-
+//charSelections auswählen der zu untersuchenden Uebungen
 for (let obj of selectExercise) {
-    obj.addEventListener('click', (evt) => {
+    obj.addEventListener('click', async function (evt) {
         let selType = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
         let dataObject = { exerciseType: selType }
 
-
-        axios({
-            method: 'post',
+        const res = await axios({
+            method: 'get',
             url: '/Datenbank/selectExercise',
-            data: dataObject,
-            headers: {
-                'Content-Type': 'application/json'
-
-            }
+            params: dataObject,
         })
-            .then((response) => {
-                console.log(response.data);
-            }, (error) => {
-                console.log(error);
-            });
+        console.log(res.data)
+        let newDiv = document.createElement("div");
+        let inputStyle = document.createElement("select");
+        let addExerciseButton = evt.target;
+        // addExerciseButton.disabled = true;
 
 
+        let newButton = document.createElement("button");
+        newDiv.appendChild(inputStyle);
+        newDiv.appendChild(newButton);
+        //Form Klassen etc.
+        inputStyle.classList.toggle("form-control");
+        newButton.innerText = "Continue";
+        newButton.classList.toggle("selcSpefExcer");
+
+
+        for (el of res.data.selectedExercises) {
+            let Name = el.exerciseName;
+            let option = document.createElement("option")
+            option.value = Name
+            option.innerText = Name
+            inputStyle.appendChild(option);
+
+            let place = evt.target.parentElement;
+
+            place.insertBefore(newDiv, evt.target.nextSibling)
+
+        }
+        //Falls Fehler den letzten Eintrag löschen. Funkt nicht :(
+        // if (evt.nextElementSibling === true) {
+        //     evt.nextElementSibling.remove();
+        // }
     })
 }
 
 
 
-
+//neue Übung in pickable Exercise machen
 for (let obj of addExercises) {
     obj.addEventListener('click', (evt) => {
         let addExerciseButton = evt.target;
@@ -197,7 +217,7 @@ function saveButtonListener(btn) {
             url: '/Datenbank/newData',
             data: dataObject,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
 
             }
         })
@@ -219,6 +239,7 @@ function saveButtonListener(btn) {
 
 }
 
+//neues Set in pExercises machen
 for (let obj of makenewSet) {
 
     obj.addEventListener('click', (evt) => {
@@ -275,6 +296,7 @@ for (let obj of makenewSet) {
 
     })
 }
+
 
 //Speichern der Uebungssaetze in die Datenbank
 for (let obj of saveSetButtons) {

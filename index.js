@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const helmet = require("helmet");
 const { body, validationResult } = require('express-validator');
+require('dotenv').config()
 
 
 
@@ -11,7 +12,7 @@ const mongoose = require("mongoose");
 const Exercise = require("./models/exercise");
 const Daten = require("./models/daten");
 // mongoose.connect('mongodb+srv://Pada:6GQrOMWTsgC6dSI8@cluster0.vncly.mongodb.net/myFirstDatabase?retryWrites=true&w=majority') Hier für online Datenbank(Server IP Whitelisten)
-mongoose.connect('mongodb+srv://Pada:Rc4bEdQNzqjdbbyq@cluster0.vncly.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+mongoose.connect(process.env.mongoLink)
     .then(() => {
         console.log("Mongo Connection Open")
 

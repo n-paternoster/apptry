@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const Exercise = require("./models/exercise");
+require('dotenv').config()
 
 
-mongoose.connect('mongodb://localhost:27017/Trackerv5')
+mongoose.connect(process.env.mongoLink)
     .then(() => {
         console.log("Mongo Connection Open")
 
@@ -25,7 +26,7 @@ const seedExercises = [
         basicExercise: true
     },
     {
-        exerciseName: "Leg Extentions",
+        exerciseName: "Leg Extensions",
         exerciseType: "Legs",
         basicExercise: true
     },

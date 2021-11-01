@@ -21,6 +21,8 @@ for (let obj of selectExercise) {
             params: dataObject,
         })
         console.log(res.data)
+
+
         let newDiv = document.createElement("div");
         let inputStyle = document.createElement("select");
         let addExerciseButton = evt.target;

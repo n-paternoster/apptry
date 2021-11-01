@@ -108,7 +108,7 @@ app.get("/Datenbank/selectExercise", async (req, res) => {
 
     console.log(values)
     selectedExercises = await Exercise.find({
-        exerciseType: values,
+        exerciseType: values[0],
         basicExercise: true
     })
 

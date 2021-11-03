@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const Daten = require("./models/daten");
+require('dotenv').config()
 
-mongoose.connect('mongodb://localhost:27017/Trackerv5')
+mongoose.connect(process.env.mongoLink)
     .then(() => {
         console.log("Mongo Connection Open")
 

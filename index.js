@@ -48,7 +48,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+// app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -128,7 +128,7 @@ app.post("/Datenbank/newExercise", async (req, res) => {
 
 
 })
-let selectedExercises = 0;
+
 app.get("/Datenbank/selectExercise", async (req, res) => {
 
     const values = Object.values(req.query);
@@ -136,7 +136,7 @@ app.get("/Datenbank/selectExercise", async (req, res) => {
 
 
     console.log(values)
-    selectedExercises = await Exercise.find({
+    let selectedExercises = await Exercise.find({
         exerciseType: values[0],
         basicExercise: true
     })
@@ -146,6 +146,16 @@ app.get("/Datenbank/selectExercise", async (req, res) => {
 
 
 
+})
+app.get("/Datenbank/selectName", async (req, res) => {
+    const values = Object.values(req.query);
+
+    let selectedData = await Daten.find({
+        exerciseName: values[0],
+
+    })
+    console.log(selectedData)
+    res.send({ selectedData })
 })
 
 app.get('/Exercises', (req, res) => {
@@ -171,27 +181,6 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 
 }))
-
-// app.get('/register', checkNotAuthenticated, (req, res) => {
-//     res.render('register.ejs')
-// })
-
-// app.post('/register', checkNotAuthenticated, async (req, res) => {
-//     try {
-//         const hashedPassword = await bcrypt.hash(req.body.password, 10)
-//         users.push({
-//             id: Date.now().toString(),
-//             name: req.body.name,
-//             email: req.body.email,
-//             password: hashedPassword
-
-//         })
-//         console.log(users)
-//         res.redirect('/login')
-//     } catch {
-//         res.redirect('/register')
-//     }
-// })
 
 app.delete('/logout', (req, res) => {
     req.logOut()

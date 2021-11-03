@@ -34,7 +34,7 @@ for (let obj of selectExercise) {
         newDiv.appendChild(newButton);
         //Form Klassen etc.
         inputStyle.classList.toggle("form-control");
-        newButton.innerText = "Continue";
+        newButton.innerText = "Commit";
         newButton.classList.toggle("selcSpefExcer");
 
 
@@ -50,10 +50,24 @@ for (let obj of selectExercise) {
             place.insertBefore(newDiv, evt.target.nextSibling)
 
         }
-        //Falls Fehler den letzten Eintrag löschen. Funkt nicht :(
-        // if (evt.nextElementSibling === true) {
-        //     evt.nextElementSibling.remove();
-        // }
+
+        const searchExerciseData = document.querySelectorAll('.selcSpefExcer');
+        for (let obj of searchExerciseData) {
+            obj.addEventListener('click', async function (evt) {
+                let selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
+                let dataObject = { exerciseName: selectName }
+
+                const res = await axios({
+                    method: 'get',
+                    url: '/Datenbank/selectName',
+                    params: dataObject,
+                })
+                console.log(res.data)
+            })
+        }
+
+
+
     })
 }
 
@@ -219,7 +233,7 @@ function saveButtonListener(btn) {
             url: '/Datenbank/newData',
             data: dataObject,
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
 
             }
         })
@@ -303,6 +317,11 @@ for (let obj of makenewSet) {
 //Speichern der Uebungssaetze in die Datenbank
 for (let obj of saveSetButtons) {
     saveButtonListener(obj)
+
+}
+
+function createGraph(dataName, Data) {
+
 
 }
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 const { body, validationResult } = require('express-validator');
 require('dotenv').config()
 const bcrypt = require('bcrypt')
@@ -44,7 +44,7 @@ mongoose.connect(process.env.mongoLink)
 
 
 
-app.use(helmet({ contentSecurityPolicy: false }));
+// app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -70,7 +70,7 @@ app.get('/', checkAuthenticated, (req, res) => {
 
 })
 
-app.get("/Datenbank", async (req, res) => {
+app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     // Sucht nach den Uebungen je ausgewaehlter Koerperpartie
     const search = Object.values(req.query);
     search1 = search[0];
@@ -105,7 +105,9 @@ app.get("/Datenbank", async (req, res) => {
 })
 
 
-app.post("/Datenbank/newData", async (req, res) => {
+
+
+app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
     console.log("das der Body")
     console.log(req.body)
 
@@ -117,7 +119,7 @@ app.post("/Datenbank/newData", async (req, res) => {
 
 })
 
-app.post("/Datenbank/newExercise", async (req, res) => {
+app.post("/Datenbank/newExercise", checkAuthenticated, async (req, res) => {
 
     console.log(req.body)
 
@@ -129,7 +131,10 @@ app.post("/Datenbank/newExercise", async (req, res) => {
 
 })
 
-app.get("/Datenbank/selectExercise", async (req, res) => {
+
+
+
+app.get("/Datenbank/selectExercise", checkAuthenticated, async (req, res) => {
 
     const values = Object.values(req.query);
     // const selected = Object.values(JSON.stringify(req.body));
@@ -147,22 +152,23 @@ app.get("/Datenbank/selectExercise", async (req, res) => {
 
 
 })
-app.get("/Datenbank/selectName", async (req, res) => {
+app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
     const values = Object.values(req.query);
 
     let selectedData = await Daten.find({
         exerciseName: values[0],
 
     })
+    console.log(values)
     console.log(selectedData)
     res.send({ selectedData })
 })
 
-app.get('/Exercises', (req, res) => {
+app.get('/Exercises', checkAuthenticated, (req, res) => {
     res.render("pickableExercises")
 })
 
-app.get('/Chart', (req, res) => {
+app.get('/Chart', checkAuthenticated, (req, res) => {
     res.render("chartSelection")
 })
 

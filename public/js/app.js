@@ -12,6 +12,7 @@ const selectExercise = document.querySelectorAll('.selectExerc');
 //charSelections auswählen der zu untersuchenden Uebungen
 for (let obj of selectExercise) {
     obj.addEventListener('click', async function (evt) {
+
         let selType = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
         let dataObject = { exerciseType: selType }
 
@@ -34,8 +35,10 @@ for (let obj of selectExercise) {
         newDiv.appendChild(newButton);
         //Form Klassen etc.
         inputStyle.classList.toggle("form-control");
-        newButton.innerText = "Commit";
+        newButton.innerText = "Show Chart";
         newButton.classList.toggle("selcSpefExcer");
+
+
 
 
         for (el of res.data.selectedExercises) {
@@ -63,9 +66,13 @@ for (let obj of selectExercise) {
                     params: dataObject,
                 })
                 console.log(res.data)
+                createGraph(selectName, res.data)
+
+
             })
         }
-
+        let oldName = evt.target.nextElementSibling.nextElementSibling;
+        if (oldName !== null) { oldName.remove(); }
 
 
     })

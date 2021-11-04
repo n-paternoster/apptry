@@ -36,7 +36,7 @@ for (let obj of selectExercise) {
         //Form Klassen etc.
         inputStyle.classList.toggle("form-control");
         newButton.innerText = "Show Chart";
-        newButton.classList.toggle("selcSpefExcer");
+        newButton.className = "selcSpefExcer buttonAll";
 
 
 
@@ -284,12 +284,14 @@ for (let obj of makenewSet) {
         inputWeight.setAttribute("placeholder", "Weight")
 
         inputReps.setAttribute("type", "number")
-        inputReps.classList.toggle("form-control")
+        inputReps.classList.add("form-control")
         inputReps.setAttribute("placeholder", "Number of Repetitions")
 
-        savebutton.classList.toggle("saveSetButton")
+        savebutton.className = "saveSetButton buttonAll";
         savebutton.innerText = "Save";
+
         deleteButton.innerText = "Delete Set";
+        deleteButton.className = "buttonAll";
 
         newDiv.setAttribute("id", "Set" + setNum)
 

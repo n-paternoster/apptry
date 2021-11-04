@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -31,55 +31,74 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
 
 
     <h1>Pick Todays Exercises</h1>
 
     <form action="/Datenbank" method="get">
-        <div class="list-group user-select-none ">
-            <label class="list-group-item picker">
-                <input class="user-select-none form-check-input me-1 " type="checkbox" value="Biceps"
-                    name="reqExercises">
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Biceps" id="Biceps" name="Biceps">
+            <label class="form-check-label" for="Biceps">
                 Biceps
             </label>
-            <label class="list-group-item picker">
-                <input class="form-check-input me-1" type="checkbox" value="Triceps" name="reqExercises">
+        </div>
+
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Triceps" id="Triceps" name="Triceps">
+            <label class="form-check-label" for="Triceps">
                 Triceps
             </label>
-            <label class="list-group-item picker">
-                <input class="form-check-input me-1" type="checkbox" value="Legs" name="reqExercises">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Legs" id="Legs" name="Legs">
+            <label class="form-check-label" for="Legs">
                 Legs
             </label>
-            <label class="list-group-item picker">
-                <input class="form-check-input me-1" type="checkbox" value="Chest" name="reqExercises">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Chest" id="Chest" name="Chest">
+            <label class="form-check-label" for="Chest">
                 Chest
             </label>
-            <label class="list-group-item picker">
-                <input class="form-check-input me-1" type="checkbox" value="Abdominal" name="reqExercises">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Abdominal" id="Abdominal" name="Abdominal">
+            <label class="form-check-label" for="Abdominal">
                 Abdominal
             </label>
-            <label class="list-group-item picker">
-                <input class="form-check-input me-1" type="checkbox" value="Shoulders" name="reqExercises">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Shoulders" id="Shoulders" name="Shoulders">
+            <label class="form-check-label" for="Shoulders">
                 Shoulders
             </label>
-            <label class="list-group-item picker">
-                <input class="form-check-input me-1" type="checkbox" value="Lower Back" name="reqExercises">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Lower Back" id="Lower Back" name="Lower Back">
+            <label class="form-check-label" for="Lower Back">
                 Lower Back
             </label>
-            <label class="list-group-item picker">
-                <input class="form-check-input me-1" type="checkbox" value="Upper Back" name="reqExercises">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="Upper Back" id="Upper Back" name="Upper Back">
+            <label class="form-check-label" for="Upper Back">
                 Upper Back
             </label>
         </div>
-        <button class="btn btn-outline-secondary btn-lg">Continue</button>
 
+
+
+        <div class="centering">
+            <button type="submit" class="buttonGet">Continue</button>
+        </div>
     </form>
-
-
-    <div>
-        <button class="addExercise btn btn-outline-secondary btn-lg"">Add Exercise</button>
+    <hr class="rounded">
+    <div class="centering">
+        <button class="addExercise buttonAll centering">Add Exercise</button>
     </div>
 
 

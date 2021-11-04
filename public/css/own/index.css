@@ -1,10 +1,21 @@
 *{
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 body, html {
-    height: 100%;
-  }
+  width: 100;
+  height: 100%;
+  background-color: #18181B !important;
+  align-content: center !important;
+}
+h1 {
+   color: #EFEFF1 !important;
+   background-color: #18181B  !important;
+   padding-bottom: 0.2em;
+   margin: 0;
+   text-align: center;
+
+}
 .card {
     position: relative;
 }
@@ -27,10 +38,6 @@ body, html {
 }  
 
 
-body {
-    background-color: #292b3a ;
-    align-content: center;
-}
 
   
 .card {
@@ -61,7 +68,7 @@ a {
     
   }
   
-  
+ 
   
   .tags {
     display: flex;

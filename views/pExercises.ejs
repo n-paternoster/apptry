@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Picked Exercises</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/own/basic.css">
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -14,7 +15,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -30,7 +31,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <h1>Selected Exercises</h1>
     <!-- Erstellt für jede ausgewählte Übung ein eigenes Akkordeon und Ausfüll vorm.  -->
@@ -42,54 +43,52 @@
 
 
         <div class=" accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne<%= i %>">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne<%=i %>" aria-expanded="false"
-                                aria-controls="flush-collapseOne<%=i %>">
-                                <%= nameArray[i]%>
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne<%= i %>" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOne<%= i %>" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                <!-- //Daten ab hier werden selbststädnig geöffnet// -->
-                                <div>
-                                    <p>Last Maximum Weight: <%= latestWeight[i] %>
-                                    </p>
-                                    <p>
-                                        Latest Repetition Count: <%= latestReps[i] %>
-                                    </p>
-                                </div>
-                                <div id="Set1">
-                                    <input type="number" class="form-control" aria-label="" placeholder="Weight">
+            <h2 class="accordion-header" id="flush-headingOne<%= i %>">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne<%=i %>" aria-expanded="false"
+                    aria-controls="flush-collapseOne<%=i %>">
+                    <%= nameArray[i]%>
+                </button>
+            </h2>
+            <div id="flush-collapseOne<%= i %>" class="accordion-collapse collapse"
+                aria-labelledby="flush-headingOne<%= i %>" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <!-- //Daten ab hier werden selbststädnig geöffnet// -->
+                    <div class="styleWeight">
+                        <p>Last Maximum Weight: <%= latestWeight[i] %>
+                        </p>
+                        <p>
+                            Latest Repetition Count: <%= latestReps[i] %>
+                        </p>
+                    </div>
+                    <div id="Set1">
+                        <input type="number" class="form-control" aria-label="" placeholder="Weight">
 
-                                    <input type="number" class="form-control" aria-label=""
-                                        placeholder="Number of Repetitions">
+                        <input type="number" class="form-control" aria-label="" placeholder="Number of Repetitions">
 
-                                    <button type="button" class="saveSetButton">Save</button>
+                        <button type="button " class="saveSetButton buttonAll">Save</button>
 
-                                </div>
-                                <div id="Set2">
-                                    <input type="number" class="form-control" aria-label="" placeholder="Weight">
-                                    <input type="number" class="form-control" aria-label=""
-                                        placeholder="Number of Repetitions">
+                    </div>
+                    <div id="Set2">
+                        <input type="number" class="form-control" aria-label="" placeholder="Weight">
+                        <input type="number" class="form-control" aria-label="" placeholder="Number of Repetitions">
 
-                                    <button type="button" class="saveSetButton">Save</button>
-                                </div>
-                                <div id="Set3">
-                                    <input type="number" class="form-control" placeholder="Weight">
-                                    <input type="number" class="form-control" placeholder="Number of Repetitions">
+                        <button type="button" class="saveSetButton buttonAll">Save</button>
+                    </div>
+                    <div id="Set3">
+                        <input type="number" class="form-control" placeholder="Weight">
+                        <input type="number" class="form-control" placeholder="Number of Repetitions">
 
-                                    <button type="button" class="saveSetButton">Save</button>
-                                </div>
+                        <button type="button" class="saveSetButton buttonAll">Save</button>
+                    </div>
 
-                                <button class="addOneSet">Additional Set</button>
+                    <button class="buttonAll addOneSet">Additional Set</button>
 
-                            </div>
-                        </div>
                 </div>
+            </div>
+        </div>
 
 
-                <% } %>
-                    <script src="/js/app.js"></script>
+        <% } %>
+            <script src="/js/app.js"></script>
 </body>

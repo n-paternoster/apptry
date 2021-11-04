@@ -2,22 +2,98 @@
     margin: 0;
     padding: 0;
 }
-body {
-    background-color: #292b3a ;
+body, html {
+    height: 100%;
+    width: 100%;
+    
+    
+    
+  }
 
+body{
+    background-color: #18181B !important;
+    align-content: center;
+    text-align: center;
 }
 h1 {
-    color: #bfc0c0;
-}
-.picker{
-    background-color: #333649;
-    color: #cbd8d8;
-}
-
-.picker:hover {
-    background-color: #40445c;
+     color: #EFEFF1 !important;
+     background-color: #18181B  !important;
+     padding-bottom: 0.2em;
+     margin: 0;
+     text-align: center;
 
 }
+.form-check{
+    height: 8%;
+    margin: 0;
+    padding: 0;
+}
+
+
+input{
+    opacity:0;
+    padding: 0 !important;
+    
+}
+
+label{
+    text-align: center;
+    color: #EFEFF1;
+    height: 100%;
+    width: 100%;
+    margin:0;
+    padding-left: 0 !important;
+    padding-bottom: 0.8em;
+    padding-top: 0.8em;
+    background-color: #1F1F23;
+    border-top: 0.1em solid #000000 !important;
+}
+
+
+.buttonAll{
+    background-color: #18181B;
+    color:#FFFFFF;
+    
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    
+    text-decoration: none;
+    font-weight: 200;
+    text-align: center;
+
+}
+.buttonGet{
+    background-color: #18181B;
+    color:#FFFFFF;
+    
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    margin-top: 1em;
+    border-radius: 0.12em;
+    
+    text-decoration: none;
+    font-weight: 200;
+    text-align: center;
+}
 
 
 
+
+input:checked ~ label {
+    color: #2eb839;
+    background-color: #2b2b30;
+    width: 99%;
+    transform: translate(1%);
+  }
+  .centering{
+      text-align: center;
+  }
+
+  hr.rounded {
+    margin-left: 5%;
+    width: 90%;
+    border-top: 8px solid #bbb;
+    border-radius: 5px;}

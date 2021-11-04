@@ -1,0 +1,106 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #18181B !important;
+    align-content: center !important;
+  }
+h1 {
+     color: #EFEFF1 !important;
+     background-color: #18181B  !important;
+     padding-bottom: 0.2em;
+     margin: 0;
+     text-align: center;
+
+}
+.accordion-button:not(.collapsed){
+
+    background-color:#2b2b30 !important;
+    font-weight: bold ;
+    
+}
+.accordion-button{
+    background-color: #1F1F23 !important;
+    color: #EFEFF1 !important;
+    
+    border-top: 0.1em solid #000000 !important;
+    text-align: center !important;
+    align-content: center;
+    display:block;
+}
+.accordion-item{
+    color: #EFEFF1;
+    background-color: #1F1F23;
+    text-align: center !important;
+    
+}
+.accordion-header{
+    align-content: center;
+}
+.form-control{
+
+    border: 0 !important;
+    margin-top: 0.2em !important;
+    margin-bottom: 0.2em !important;
+}
+input[type="number"], textarea {
+
+    color: #EFEFF1 !important;
+    background-color: #4C4C4F !important;
+    text-align: center;
+    font-size: 110% !important;
+
+}
+
+input[type="number"]:disabled, textarea:disabled{
+    color: #9898ac !important;
+    background-color: #2b2b30 !important;
+
+}
+
+.accordion-button::after {
+
+    margin: 0 !important;
+}
+
+.buttonAll:disabled{
+    color: #4C4C4F !important;
+    border-color: #4C4C4F !important;
+
+}
+::placeholder { 
+    color:    #efeff1 !important;
+    font-style: italic;
+ }
+
+.buttonAll{
+    background-color: #18181B;
+    color:#FFFFFF;
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: 200;
+    text-align: center;
+}
+
+/* 
+.styleWeight{
+
+     border: 0.1em solid #FFFFFF; 
+
+} 
+*/
+/* Dunkeler hIntergrund vor headlines und Body #18181B 
+    Schrift farbe #EFEFF1
+    dunk-hell für die Reiter #1F1F23
+
+
+
+*/

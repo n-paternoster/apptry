@@ -30,11 +30,14 @@ h1 {
 }
 
 
-input{
+input.form-check-input{
     opacity:0;
     padding: 0 !important;
     
 }
+
+
+
 
 label{
     text-align: center;
@@ -85,8 +88,7 @@ label{
 input:checked ~ label {
     color: #2eb839;
     background-color: #2b2b30;
-    width: 99%;
-    transform: translate(1%);
+ 
   }
   .centering{
       text-align: center;
@@ -97,3 +99,56 @@ input:checked ~ label {
     width: 90%;
     border-top: 8px solid #bbb;
     border-radius: 5px;}
+
+
+.TextStyle{
+        color: #EFEFF1;
+    }
+
+select.form-control{
+    color: #EFEFF1;;
+    width: 90%;
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+    text-align: center;
+    background-color:#2b2b30 ;
+    margin-bottom: 2%;
+    margin-top: 1%;
+}
+
+input.forming:active{
+    background-color:#2b2b30 ;
+    color: #EFEFF1;
+}
+
+
+input.forming{
+    
+    color: #EFEFF1;
+    width: 90%;
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+    text-align: center;
+    background-color:#2b2b30 ;
+    border-radius: 5px;
+
+}
+
+option{
+    background-color:#2b2b30 ;
+    color: #EFEFF1;
+}
+
+::placeholder { 
+    color:    #efeff1 !important;
+    font-style: italic;
+ }
+
+ input.forming[type="string"], textarea {
+    
+    color: #EFEFF1 !important;
+    background-color: #2b2b30 !important;
+    text-align: center;
+    font-size: 110% !important;
+
+}

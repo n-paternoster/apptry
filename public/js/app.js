@@ -94,6 +94,12 @@ for (let obj of addExercises) {
         let savebutton = document.createElement("button");
         let deleteButton = document.createElement("button");
 
+        let option0 = document.createElement("option")
+        option0.value = "";
+        option0.innerText = "Select Muscle";
+        option0.attributes = "disabled selected"
+        inputStyle.appendChild(option0);
+
         let option1 = document.createElement("option")
         option1.value = "Biceps";
         option1.innerText = "Biceps";
@@ -135,7 +141,7 @@ for (let obj of addExercises) {
         inputStyle.appendChild(option8);
 
         inputName.setAttribute("type", "string")
-        inputName.classList.toggle("form-control")
+        inputName.classList.toggle("forming")
         inputName.setAttribute("placeholder", "Exercise Name")
 
         inputStyle.setAttribute("type", "string")
@@ -145,8 +151,10 @@ for (let obj of addExercises) {
         //Dismiss button
         deleteButton.innerText = "Dismiss"
         deleteButton.classList.toggle("dismissExerciseButton");
+        deleteButton.classList.add("buttonAll");
 
-        discription.innerText = "Insert exercise name and select body part";
+        discription.innerText = "Add another Exercise by filling the form";
+        discription.classList.add("TextStyle");
 
         newDiv.appendChild(discription);
         newDiv.appendChild(inputName);
@@ -160,6 +168,7 @@ for (let obj of addExercises) {
         //Save button
         savebutton.innerText = "Save"
         savebutton.classList.toggle("saveExerciseButton");
+        savebutton.classList.add("buttonAll");
 
         savebutton.addEventListener('click', (evt) => {
 
@@ -217,6 +226,8 @@ for (let obj of addExercises) {
 
     })
 }
+
+
 function saveButtonListener(btn) {
     btn.addEventListener('click', (evt) => {
 
@@ -261,6 +272,12 @@ function saveButtonListener(btn) {
 
 
 }
+//Speichern der Uebungssaetze in die Datenbank
+for (let obj of saveSetButtons) {
+    saveButtonListener(obj)
+
+}
+
 
 //neues Set in pExercises machen
 for (let obj of makenewSet) {
@@ -321,14 +338,6 @@ for (let obj of makenewSet) {
 
     })
 }
-
-
-//Speichern der Uebungssaetze in die Datenbank
-for (let obj of saveSetButtons) {
-    saveButtonListener(obj)
-
-}
-
 function createGraph(dataName, Data) {
 
 

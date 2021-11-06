@@ -90,11 +90,11 @@ input:checked ~ label {
     background-color: #2b2b30;
  
   }
-  .centering{
+.centering{
       text-align: center;
-  }
+}
 
-  hr.rounded {
+hr.rounded {
     margin-left: 5%;
     width: 90%;
     border-top: 8px solid #bbb;

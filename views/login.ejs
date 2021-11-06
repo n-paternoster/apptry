@@ -6,24 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/own/login.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>Login</title>
 </head>
 
 <body>
-
+    <h1>Login</h1>
     <% if (messages.error) { %>
         <%= messages.error %>
             <% } %>
-                <div class="form-login">
-                    <form action="/login" method="POST">
+                <div class="content">
+                    < <form action="/login" method="POST">
 
 
-                        <div class="heading">
-                            <h1>Login</h1>
-                        </div>
-                        <div class="inpgroup">
+
+                        <div class="ingroup">
                             <div class="icon">
-                                <img src="/views/pics/user.png" alt="">
+                                <img src="pics/user.png" alt="">
                             </div>
                             <div class="input">
                                 <input type="email" id="email" name="email" required placeholder="Email">
@@ -31,25 +30,20 @@
                         </div>
 
 
-                        <div class="inpgroup">
+                        <div class="ingroup">
                             <div class="icon">
-                                <img src="/views/pics/padlock.png" alt="">
+                                <img src="pics/padlock.png">
                             </div>
-                            <div class="input">
+                            <div class=" input">
                                 <input type="password" id="password" name="password" required placeholder="Password">
                             </div>
                         </div>
-
-
-                        <div class="inpgroup">
-                            <div class="icon">
-                                <img src="/views/pics/login.png" alt="">
-                            </div>
-                            <button class="signin" type="submit">Login</button>
+                        <div class="centering">
+                            <button class="signin buttonAll" type="submit">Login</button>
                         </div>
-
-                    </form>
+                        </form>
                 </div>
+
 
 </body>
 

@@ -173,10 +173,6 @@ app.get('/Chart', checkAuthenticated, (req, res) => {
 })
 
 
-app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name })
-})
-
 app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs')
 })

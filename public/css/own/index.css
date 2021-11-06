@@ -33,7 +33,7 @@ h1 {
 .main-link {
     
     margin:auto;
-    font-size: 600%;
+    font-size: 500%;
     
 }  
 
@@ -43,24 +43,24 @@ h1 {
 .card {
     align-content: center;
     align-items: center;
-    font-family: "PT Serif", serif;
-    min-width: 95%;
-    width: 95%;
-    height: 40%;
-    background: #17141d;
-    border-radius: 3rem;
+    
+    
+    width: 98%;
+    height: 44%;
+    background: #1F1F23 ;
+    
     padding: 1rem 1.5rem;
-    box-shadow: -1rem 0 3rem #000;
+   
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: 0.2s;
-    margin: 2.5%;
+   
+    margin: 1%;
   }
   
 a {
-    color: #fff;
+    color: #efeff1;
     text-decoration: none;
     transition: 0.2s;
     

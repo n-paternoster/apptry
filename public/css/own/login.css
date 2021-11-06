@@ -4,61 +4,103 @@
 }
 body, html {
     height: 100%;
-  }
+  width: 100%;  
+}
 
 body {
-    background-color: #292b3a ;
-    /* align-content: center; */
+  width: 100%;
+  height: 100%;
+  background-color: #18181B !important;
+  align-content: center !important;
+}
+
+
+h1 {
+  color: #EFEFF1 !important;
+  background-color: #18181B  !important;
+  padding-bottom: 0.2em;
+  margin: 0;
+  text-align: center;
+
+}
+
+.buttonAll{
+  background-color: #18181B;
+  color:#FFFFFF;
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #FFFFFF;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 200;
+  text-align: center;
+  margin-top: 1em;
+}
+
+div .ingroup{
+margin-top: 0.5em;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}
+
+img{
+  height: 28px;
+  width: 28px;
+}
+
+.icon{
+  height: 28px;
+  width: 28px;
+}
+
+
+.centering{
+  text-align: center;
+}
+
+input:active{
+  background-color:#2b2b30 !important;
+  color: #EFEFF1 !important;
+}
+
+input[type="string"], textarea {
+    
+  color: #EFEFF1 !important;
+  background-color: #2b2b30 !important;
+  text-align: center;
+  font-size: 110% !important;
+
+}
+input{
+  border: 0.1em solid #FFFFFF;
+  color: #EFEFF1;
+  width: 100%;
+  
+  text-align: center;
+  background-color:#2b2b30 !important;
+  border-radius: 5px;
+
+}
+
+input:-internal-autofill-selected {
+  width: 100%;
+  background-image: none !important;
+  background-color: #2b2b30 !important;
+  color: #EFEFF1 !important;
 }
 
 
 
-
-.form-login {
-  
-  margin: auto;
+.input{
   width: 80%;
-  position: relative;
-  
+  text-align: center;
   align-content: center;
-  align-items: center;
-  
-  background-color: #333649;
-  
-}
-.heading {
-    align-content: center;
-    width: 100%;
-    font-size: 200%;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-align: center;
-    background-color: #42465f;
-    
-    
-    margin: auto;
-    
-  }
- .inpgroup {
-    padding-left: 10%;
-    width: 80%;
-    color: white;
-
- }
-
-
-input {
-    
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    background-color: white;
-    width: 100%;
-    font-size: 150%;
-    
 }
 ::placeholder { 
-        color: #2d2d33;
-        
-        
-      }
- 
+  color:    #efeff1 !important;
+  font-style: italic;
+}

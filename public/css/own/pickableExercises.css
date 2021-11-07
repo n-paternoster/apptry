@@ -82,7 +82,12 @@ label{
     text-align: center;
 }
 
-
+.buttonGet::after{
+    color: #2eb839;
+}
+.buttonGet:aktive{
+    color: #2eb839;
+}
 
 
 input:checked ~ label {

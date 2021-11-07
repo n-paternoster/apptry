@@ -10,6 +10,8 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 
+
+
 //Passwortsachen
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -91,7 +93,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     console.log(nameArray);
 
     for (let iwas of nameArray) {
-        const pDaten = await Daten.find({ exerciseName: iwas }, 'exerciseWeight exerciseRep').sort({ $natural: -1 }).limit(3);
+        const pDaten = await Daten.find({ exerciseName: iwas, basicExercise: false }, 'exerciseWeight exerciseRep').sort({ $natural: -1 }).limit(3);
 
         latestReps.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseRep);
         latestWeight.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseWeight);
@@ -157,8 +159,9 @@ app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
 
     let selectedData = await Daten.find({
         exerciseName: values[0],
+        basicExercise: false,
 
-    })
+    }, "exerciseDate exerciseWeight exerciseRep exerciseSet")
     console.log(values)
     console.log(selectedData)
     res.send({ selectedData })

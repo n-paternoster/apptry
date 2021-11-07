@@ -1,4 +1,6 @@
-//Liste aller Körperpartien
+
+
+
 
 const allBodyparts = ["Biceps", "Triceps", "Legs", "Chest", "Abdominal", "Shoulders", "Lower Back", "Upper Back"]
 const saveSetButtons = document.querySelectorAll('.saveSetButton');
@@ -9,12 +11,13 @@ const makenewSet = document.querySelectorAll('.addOneSet');
 const addExercises = document.querySelectorAll('.addExercise');
 
 const selectExercise = document.querySelectorAll('.selectExerc');
-//charSelections auswählen der zu untersuchenden Uebungen
+//chartSelections auswählen der zu untersuchenden Uebungen
 for (let obj of selectExercise) {
     obj.addEventListener('click', async function (evt) {
 
         let selType = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
         let dataObject = { exerciseType: selType }
+
 
         const res = await axios({
             method: 'get',
@@ -66,7 +69,7 @@ for (let obj of selectExercise) {
                     params: dataObject,
                 })
                 console.log(res.data)
-                createGraph(selectName, res.data)
+                createGraph(selectName, res.data);
 
 
             })
@@ -235,7 +238,12 @@ function saveButtonListener(btn) {
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
         let setCount = evt.target.parentElement.id //setCount //"Set1"
-        let eDate = Date.now();
+        let today = new Date();
+        let eDate = today.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
+        console.log(eDate)
+        console.log(today)
+
+
         let setNum = setCount.match(/\d/g);
         setNum = setNum.join("");
         let dataObject = {
@@ -244,7 +252,8 @@ function saveButtonListener(btn) {
             exerciseWeight: eWeight,
             exerciseRep: eRep,
             exerciseSet: setNum,
-            exerciseDate: eDate
+            exerciseDate: eDate,
+            basicExercise: false
         }
         axios({
             method: 'post',
@@ -338,12 +347,65 @@ for (let obj of makenewSet) {
 
     })
 }
+
+
 function createGraph(dataName, Data) {
 
 
+    //Aufteilen aller Übung auf einzelne Tage
+    let dataset = Data.selectedData
+
+    console.log(dataset)
+
+
+    //Sortieren der Übungen aufsteigend funktionier!??!
+    const sortedDada = dataset.slice().sort((a, b) => b.exerciseDate - a.exerciseDate)
+
+    let nestedMeanWeight = d3.nest()
+        .key(function (d) { return d.exerciseDate; })
+        .rollup(function (m) {
+            return d3.mean(m, function (d) { return d.exerciseWeight });
+        })
+        .entries(sortedDada);
+
+
+    let nestedMeanReps = d3.nest()
+        .key(function (d) { return d.exerciseDate; })
+        .rollup(function (m) {
+            return d3.mean(m, function (d) { return d.exerciseRep });
+        })
+        .entries(sortedDada);
+
+
+    let weights = [];
+    let dateLabel = [];
+    for (obj of nestedMeanWeight) {
+        let weight = obj.values
+        let label = obj.key
+        dateLabel.push(label)
+        weights.push(weight)
+    }
+    console.log(nestedMeanWeight)
+    console.log(nestedMeanReps)
+    console.log(weights)
+    console.log(dateLabel)
+
+
+
+
+    const chart = document.getElementById("myChart")
+    let linechart = new Chart(chart, {
+        type: "line",
+        data: {
+            labels: dateLabel,
+            datasets: [{
+                label: 'Mean Value of Weight',
+                data: weights,
+                borderColor: "#FFFFFF",
+
+            }]
+
+        }
+    })
+
 }
-
-
-
-
-

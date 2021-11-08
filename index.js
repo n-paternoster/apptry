@@ -90,21 +90,29 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
     let nameArray = [];
     let data = [];
-    // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
-    for (let name of allNames) {
-        const lastDay = await Daten.find({ exerciseName: name, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
 
-        let Day = lastDay[0].exerciseDate;
-
-
-
-        const pDaten = await Daten.find({ exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
+    for (let name of allNames) {        // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
+        const lastDay = await Daten.find({ exerciseName: name }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
+        console.log(lastDay)
+        console.log(typeof lastDay)
 
 
-        data.push(pDaten)
-        nameArray.push(name)
-        // latestReps.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseRep);
-        // latestWeight.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseWeight);
+        if (lastDay == "") {    //checkted ob bereits Übungen vorhanden sind, sonnst kein Obkejt und dann Fehler
+
+            nameArray.push(name)
+            data = [0];
+        } else {
+            let Day = lastDay[0].exerciseDate;
+            const pDaten = await Daten.find({ exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
+            data.push(pDaten)
+
+        }
+
+
+
+
+
+
     }
     res.render("pExercises.ejs", { nameArray, data });
 })

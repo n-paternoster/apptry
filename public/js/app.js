@@ -177,12 +177,14 @@ for (let obj of addExercises) {
 
             let exName = evt.target.previousElementSibling.previousElementSibling.value
             let exStyle = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value;
-
+            let today = new Date();
+            let eDate = today.toISOString().slice(0, 10);
             let dataObject = {
 
                 exerciseName: exName,
                 exerciseType: exStyle,
                 basicExercise: true,
+                exerciseDate: eDate,
             }
             axios({
                 method: 'post',
@@ -409,20 +411,3 @@ function createGraph(dataName, Data) {
     })
 
 }
-
-//IDEE: Mithilfe eines Buttons werden die Letzten Daten erste geladen? --> eigens Axios und dynamische function zum erstellen von Table --> nur Änderung bei /Datenbank 
-
-// const pickStyle = document.querySelectorAll(".buttonGet")
-
-// for (let obj of pickStyle) {
-//     obj.addEventListener('click', async function (evt) {
-//         let formData = new FormData(document.querySelector('form'))
-//         consoel.log(formData)
-//         const res = await axios({
-//             method: 'get',
-//             url: '/Datenbank',
-//             params: formData,
-//         })
-//         console.log(res.data)
-//     })
-// }

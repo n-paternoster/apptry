@@ -55,29 +55,64 @@
                 <div class="accordion-body">
                     <!-- //Daten ab hier werden selbststädnig geöffnet// -->
                     <div class="styleWeight">
-                        <p>Last Maximum Weight: <%= latestWeight[i] %>
-                        </p>
-                        <p>
-                            Latest Repetition Count: <%= latestReps[i] %>
-                        </p>
+                        <table class="tabel-content">
+                            <thead>
+                                <tr>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="tr-First">
+                                    <td>
+                                        Sets
+                                    </td>
+                                    <td>
+                                        Weight
+                                    </td>
+                                    <td>
+                                        Repetitions
+                                    </td>
+                                </tr>
+                                <% for(let r=0 ; r < data[i].length ; r++) {%>
+
+
+                                    <tr>
+                                        <td>
+                                            <%= data[i][r].exerciseSet %>. Set
+                                        </td>
+                                        <td>
+                                            <%= data[i][r].exerciseWeight %> kg
+                                        </td>
+                                        <td>
+                                            x <%= data[i][r].exerciseRep %>
+                                        </td>
+                                    </tr>
+
+                                    <% } %>
+                            </tbody>
+
+                        </table>
                     </div>
                     <div id="Set1">
-                        <input type="number" class="form-control" aria-label="" placeholder="Weight">
+                        <input type="number" class="form-control" aria-label="" placeholder="Weight" required>
 
-                        <input type="number" class="form-control" aria-label="" placeholder="Number of Repetitions">
+                        <input type="number" class="form-control" aria-label="" placeholder="Number of Repetitions"
+                            required>
 
                         <button type="button " class="saveSetButton buttonAll">Save</button>
 
                     </div>
                     <div id="Set2">
-                        <input type="number" class="form-control" aria-label="" placeholder="Weight">
-                        <input type="number" class="form-control" aria-label="" placeholder="Number of Repetitions">
+                        <input type="number" class="form-control" aria-label="" placeholder="Weight" required>
+                        <input type="number" class="form-control" aria-label="" placeholder="Number of Repetitions"
+                            required>
 
                         <button type="button" class="saveSetButton buttonAll">Save</button>
                     </div>
                     <div id="Set3">
-                        <input type="number" class="form-control" placeholder="Weight">
-                        <input type="number" class="form-control" placeholder="Number of Repetitions">
+                        <input type="number" class="form-control" placeholder="Weight" required>
+                        <input type="number" class="form-control" placeholder="Number of Repetitions" required>
 
                         <button type="button" class="saveSetButton buttonAll">Save</button>
                     </div>

@@ -32,7 +32,7 @@ const users = [{
 const mongoose = require("mongoose");
 const Exercise = require("./models/exercise");
 const Daten = require("./models/daten");
-// mongoose.connect('mongodb+srv://Pada:6GQrOMWTsgC6dSI8@cluster0.vncly.mongodb.net/myFirstDatabase?retryWrites=true&w=majority') Hier für online Datenbank(Server IP Whitelisten)
+
 mongoose.connect(process.env.mongoLink)
     .then(() => {
         console.log("Mongo Connection Open")
@@ -75,35 +75,38 @@ app.get('/', checkAuthenticated, (req, res) => {
 app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     // Sucht nach den Uebungen je ausgewaehlter Koerperpartie
     const search = Object.values(req.query);
-    search1 = search[0];
-    search2 = search[1];
-    search3 = search[2];
+    let allNames = [];
+    for (s of search) {
+        const names = await Exercise.find({ exerciseType: s, basicExercise: true }, "exerciseName")
 
-    const pExercises = await Exercise.find({ $or: [{ exerciseType: search1 }, { exerciseType: search2 }, { exerciseType: search3 }], basicExercise: true }, 'exerciseName')
-    console.log(pExercises);
 
-    // Sucht nach den letzten Werten aller ausgewaehlten Uebungen
+        for (i of names) {
+
+            allNames.push(i.exerciseName);
+        }
+
+
+    }
+
     let nameArray = [];
-    let latestWeight = [];
-    let latestReps = [];
-    for (let iwas of pExercises) {
+    let data = [];
+    // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
+    for (let name of allNames) {
+        const lastDay = await Daten.find({ exerciseName: name, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
 
-        nameArray.push(iwas.exerciseName);
+        let Day = lastDay[0].exerciseDate;
+
+
+
+        const pDaten = await Daten.find({ exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
+
+
+        data.push(pDaten)
+        nameArray.push(name)
+        // latestReps.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseRep);
+        // latestWeight.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseWeight);
     }
-    console.log(nameArray);
-
-    for (let iwas of nameArray) {
-        const pDaten = await Daten.find({ exerciseName: iwas, basicExercise: false }, 'exerciseWeight exerciseRep').sort({ $natural: -1 }).limit(3);
-
-        latestReps.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseRep);
-        latestWeight.push(pDaten[0] === undefined ? 0 : pDaten[0].exerciseWeight);
-    }
-
-    console.log(latestWeight);
-    console.log(latestReps);
-    // console.log(await Daten.find({})); 
-
-    res.render("pExercises.ejs", { nameArray, latestWeight, latestReps });
+    res.render("pExercises.ejs", { nameArray, data });
 })
 
 

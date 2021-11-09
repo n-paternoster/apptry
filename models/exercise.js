@@ -6,7 +6,9 @@ const ExerciseSchema = new mongoose.Schema({
 
     exerciseType: String,
 
-    basicExercise: Boolean
+    basicExercise: Boolean,
+
+    username: String,
 
 
 })

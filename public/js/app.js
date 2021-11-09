@@ -83,8 +83,10 @@ for (let obj of selectExercise) {
 
 
 
+
 //neue Übung in pickable Exercise machen
 for (let obj of addExercises) {
+
     obj.addEventListener('click', (evt) => {
         let addExerciseButton = evt.target;
         addExerciseButton.style.visibility = "hidden";
@@ -179,11 +181,15 @@ for (let obj of addExercises) {
             let exStyle = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value;
             let today = new Date();
             let eDate = today.toISOString().slice(0, 10);
+
             let dataObject = {
 
                 exerciseName: exName,
                 exerciseType: exStyle,
                 basicExercise: true,
+
+
+
 
             }
             axios({

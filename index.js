@@ -19,11 +19,25 @@ initializePassport(
     email => users.find(user => user.email === email),
     id => users.find(user => user.id === id)
 )
+
+
+
+
+
+
+
 const users = [{
     id: '1635860869289',
     name: 'Pada',
     email: 'paternosterniklas@yahoo.de',
-    password: process.env.hashed
+    password: process.env.hashedPada
+},
+{
+    id: '1635151651351',
+    name: 'Test',
+    email: 'test@test.test',
+    password: process.env.hashedTest
+
 }
 ]
 
@@ -70,14 +84,16 @@ app.get('/', checkAuthenticated, (req, res) => {
 
     res.render("FitnessTracker")
 
+
 })
 
 app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     // Sucht nach den Uebungen je ausgewaehlter Koerperpartie
     const search = Object.values(req.query);
     let allNames = [];
+    let Uname = req.user.name
     for (s of search) {
-        const names = await Exercise.find({ exerciseType: s, basicExercise: true }, "exerciseName")
+        const names = await Exercise.find({ username: Uname, exerciseType: s, basicExercise: true }, "exerciseName")
         for (i of names) {
             allNames.push(i.exerciseName);
         }
@@ -89,7 +105,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     for (let name of allNames) {        // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
 
         //Übungsnamen prüfen, ob:
-        const lastDay = await Daten.find({ exerciseName: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
+        const lastDay = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
         console.log(lastDay)
         console.log(typeof lastDay)
 
@@ -98,7 +114,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
             console.log("check if")
             nameArray.push(name)
             let Day = lastDay[0].exerciseDate;
-            const pDaten = await Daten.find({ exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
+            const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
             data.push(pDaten)
 
         } else {
@@ -118,25 +134,35 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
 
 app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
-    console.log("das der Body")
-    console.log(req.body)
 
-    const newDaten = new Daten(req.body)
+    let name = req.user.name
+    let data = req.body
+
+    data["username"] = name;
+
+
+    const newDaten = new Daten(data)
     await newDaten.save();
-    console.log("Das sind meine Daten")
-    console.log(newDaten)
+
 
 
 })
 
 app.post("/Datenbank/newExercise", checkAuthenticated, async (req, res) => {
 
-    console.log(req.body)
 
-    const newExercise = new Exercise(req.body)
+
+    let name = req.user.name
+    let data = req.body
+
+    data["username"] = name;
+
+
+
+
+    const newExercise = new Exercise(data)
     await newExercise.save();
-    console.log("Das ist die neue uebung")
-    console.log(newExercise)
+
 
 
 })
@@ -176,7 +202,10 @@ app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
 })
 
 app.get('/Exercises', checkAuthenticated, (req, res) => {
-    res.render("pickableExercises")
+    let usernamen = req.user.name;
+    console.log(usernamen)
+    res.render("pickableExercises", { usernamen })
+
 })
 
 app.get('/Chart', checkAuthenticated, (req, res) => {

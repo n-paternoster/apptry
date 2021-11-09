@@ -11,7 +11,9 @@ const DatenSchema = new mongoose.Schema({
 
     basicExercise: Boolean,
 
-    exerciseDate: Date
+    exerciseDate: Date,
+
+    username: String,
 })
 
 const Daten = mongoose.model("Daten", DatenSchema);

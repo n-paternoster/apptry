@@ -261,7 +261,10 @@ function saveButtonListener(btn) {
             exerciseRep: eRep,
             exerciseSet: setNum,
             exerciseDate: eDate,
-            basicExercise: false
+            basicExercise: false,
+            uKey: Math.random() * Date.now()
+
+
         }
         axios({
             method: 'post',

@@ -184,7 +184,7 @@ for (let obj of addExercises) {
                 exerciseName: exName,
                 exerciseType: exStyle,
                 basicExercise: true,
-                exerciseDate: eDate,
+
             }
             axios({
                 method: 'post',

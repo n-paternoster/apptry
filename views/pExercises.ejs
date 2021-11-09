@@ -74,22 +74,25 @@
                                         Repetitions
                                     </td>
                                 </tr>
-                                <% for(let r=0 ; r < data[i].length ; r++) {%>
+                                <% if (typeof data !=='0' && data.length> 0) {
 
 
-                                    <tr>
-                                        <td>
-                                            <%= data[i][r].exerciseSet %>. Set
-                                        </td>
-                                        <td>
-                                            <%= data[i][r].exerciseWeight %> kg
-                                        </td>
-                                        <td>
-                                            x <%= data[i][r].exerciseRep %>
-                                        </td>
-                                    </tr>
+                                    for(let r=0 ; r < data[i].length ; r++) {%>
 
-                                    <% } %>
+
+                                        <tr>
+                                            <td>
+                                                <%= data[i][r].exerciseSet %>. Set
+                                            </td>
+                                            <td>
+                                                <%= data[i][r].exerciseWeight %> kg
+                                            </td>
+                                            <td>
+                                                x <%= data[i][r].exerciseRep %>
+                                            </td>
+                                        </tr>
+
+                                        <% }} %>
                             </tbody>
 
                         </table>

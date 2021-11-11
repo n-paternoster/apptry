@@ -121,22 +121,21 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
         //Übungsnamen prüfen, ob:
         const lastDay = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
-        console.log(lastDay)
-        console.log(typeof lastDay)
+
 
         if (typeof lastDay !== 'undefined' && lastDay.length > 0) {
             // the array is defined and has at least one element
-            console.log("check if")
+
             nameArray.push(name)
             let Day = lastDay[0].exerciseDate;
             const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
             data.push(pDaten)
 
         } else {
-            console.log("check else")
+
             nameArray.push(name)
             data.push(0)
-            console.log(data)
+
 
         }
 
@@ -149,17 +148,29 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
 
 app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
-
-
-    //Ansatz zum Lösen Duplikationsproblem: 1. Bedingung mit (const await .find(Set,Exercsisename,Date,basicaexercse) === true(bzw. Objekt vorhanden)) dann  Model.replaceOne() ansonsten save
     let name = req.user.name
     let data = req.body
-
     data["username"] = name;
+    console.log(data)
 
 
-    const newDaten = new Daten(data)
-    await newDaten.save();
+    const check = await Daten.exists({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false })
+    console.log(check)
+
+    if (check === true) {
+
+        const replace = await Daten.replaceOne({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false }, data)
+
+    } else {
+        console.log("else")
+        const newDaten = new Daten(data)
+        await newDaten.save();
+    }
+
+
+
+
+
 
 
 
@@ -193,13 +204,13 @@ app.get("/Datenbank/selectExercise", checkAuthenticated, async (req, res) => {
     // const selected = Object.values(JSON.stringify(req.body));
 
 
-    console.log(values)
+
     let selectedExercises = await Exercise.find({
         exerciseType: values[0],
         basicExercise: true
     })
 
-    console.log(selectedExercises)
+
     res.send({ selectedExercises })
 
 
@@ -220,7 +231,7 @@ app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
 
 app.get('/Exercises', checkAuthenticated, (req, res) => {
     let usernamen = req.user.name;
-    console.log(usernamen)
+
     res.render("pickableExercises", { usernamen })
 
 })

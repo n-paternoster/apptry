@@ -38,8 +38,23 @@ const users = [{
     email: 'test@test.test',
     password: process.env.hashedTest
 
+},
+{
+    id: '1635151651611',
+    name: 'Katja',
+    email: 'Katja.braig@gmx.de',
+    password: process.env.hashedKatja
+
+},
+{
+    id: '16313646651351',
+    name: 'Tobi',
+    email: '',
+    password: process.env.hashedTobi
+
 }
 ]
+
 
 
 //Alles DatenBank
@@ -135,6 +150,8 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
 app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
 
+
+    //Ansatz zum Lösen Duplikationsproblem: 1. Bedingung mit (const await .find(Set,Exercsisename,Date,basicaexercse) === true(bzw. Objekt vorhanden)) dann  Model.replaceOne() ansonsten save
     let name = req.user.name
     let data = req.body
 

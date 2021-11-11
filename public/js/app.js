@@ -252,6 +252,7 @@ function saveButtonListener(btn) {
         console.log(today)
 
 
+
         let setNum = setCount.match(/\d/g);
         setNum = setNum.join("");
         let dataObject = {
@@ -285,7 +286,7 @@ function saveButtonListener(btn) {
         [...evt.target.parentElement.children].forEach((element) => {
             element.disabled = "true"
         })
-
+        //um sachen disabeled zu lassen bei Relaoding, Session verwenden. 
 
     })
 

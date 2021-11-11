@@ -106,8 +106,8 @@ input[type="number"]:disabled, textarea:disabled{
     
 }
 .tr-First{
-    padding-left: 10px;
-    padding-right: 10px
+    padding-left: 10px !important;
+    padding-right: 10px !important;
     font-weight: bold;
     border: 3px solid rgb(0, 0, 0);
 }

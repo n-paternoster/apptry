@@ -49,7 +49,7 @@ const users = [{
 {
     id: '16313646651351',
     name: 'Tobi',
-    email: '',
+    email: 'sandner340@googlemail.com',
     password: process.env.hashedTobi
 
 }

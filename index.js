@@ -117,29 +117,22 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     let nameArray = [];
     let data = [];
 
-    for (let name of allNames) {        // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
-
-        //Übungsnamen prüfen, ob:
+    for (let name of allNames) {
+        // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
         const lastDay = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
-
-
         if (typeof lastDay !== 'undefined' && lastDay.length > 0) {
             // the array is defined and has at least one element
-
             nameArray.push(name)
             let Day = lastDay[0].exerciseDate;
             const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
             data.push(pDaten)
-
         } else {
-
             nameArray.push(name)
             data.push(0)
-
-
         }
 
     }
+
     res.render("pExercises.ejs", { nameArray, data });
 
 })
@@ -168,7 +161,7 @@ app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
     }
 
 
-
+    req.session.enabled = true
 
 
 

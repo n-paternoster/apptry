@@ -34,12 +34,23 @@ for (let obj of selectExercise) {
 
 
         let newButton = document.createElement("button");
+        let missingData = document.createElement("button");
         newDiv.appendChild(inputStyle);
         newDiv.appendChild(newButton);
+        newDiv.appendChild(missingData);
         //Form Klassen etc.
         inputStyle.classList.toggle("form-control");
         newButton.innerText = "Show Chart";
+        missingData.innerText = "Add Missing Data"
+        missingData.className = "buttonAll addMissingData"
         newButton.className = "selcSpefExcer buttonAll";
+
+
+
+
+
+
+
 
 
 
@@ -56,11 +67,11 @@ for (let obj of selectExercise) {
             place.insertBefore(newDiv, evt.target.nextSibling)
 
         }
-
+        let selectName = [];
         const searchExerciseData = document.querySelectorAll('.selcSpefExcer');
         for (let obj of searchExerciseData) {
             obj.addEventListener('click', async function (evt) {
-                let selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
+                selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
                 let dataObject = { exerciseName: selectName }
 
                 const res = await axios({
@@ -71,6 +82,101 @@ for (let obj of selectExercise) {
                 console.log(res.data)
                 createGraph(selectName, res.data);
 
+
+            })
+        }
+        const addMissingDaten = document.querySelectorAll('.addMissingData');
+        for (let obj of addMissingDaten) {
+
+            obj.addEventListener('click', async function (evt) {
+
+                let missingDiv = document.createElement("div")
+
+
+                let dateInput = document.createElement("input")
+                dateInput.setAttribute("type", "date")
+
+                let weightInput = document.createElement("input")
+                weightInput.setAttribute("type", "number")
+                let repsInput = document.createElement("input")
+                repsInput.setAttribute("type", "number")
+                repsInput.setAttribute("placeholder", "Repetitions")
+                weightInput.setAttribute("placeholder", "Weight")
+
+                let setSelector = document.createElement("select")
+
+                let option0 = document.createElement("option")
+                option0.value = "";
+                option0.innerText = "Select Set";
+                option0.attributes = "disabled selected"
+                setSelector.appendChild(option0);
+
+
+
+
+                let option1 = document.createElement("option")
+                option1.value = 1
+                option1.innerText = 1
+                setSelector.appendChild(option1);
+
+                let option2 = document.createElement("option")
+                option2.value = 2
+                option2.innerText = 2
+                setSelector.appendChild(option2);
+                let option3 = document.createElement("option")
+                option3.value = 3
+                option3.innerText = 3
+                setSelector.appendChild(option3);
+                let option4 = document.createElement("option")
+                option4.value = 4
+                option4.innerText = 4
+                setSelector.appendChild(option4);
+                let option5 = document.createElement("option")
+                option5.value = 5
+                option5.innerText = 5
+                setSelector.appendChild(option5);
+
+                missingDiv.appendChild(dateInput)
+                missingDiv.appendChild(setSelector)
+                missingDiv.appendChild(weightInput)
+                missingDiv.appendChild(repsInput)
+                const container = document.getElementById("myChart")
+                const parent = container.parentElement
+                parent.parentElement.insertBefore(missingDiv, parent)
+
+
+
+
+
+
+
+
+
+                // let dataObject = {
+                //     exerciseDate: dateInput.value,
+                //     exerciseName: selectName,
+                //     exerciseType: selType,
+                //     basicExercise: true,
+
+
+
+
+
+                // }
+                // axios({
+                //     method: 'post',
+                //     url: '/Datenbank/newExercise',
+                //     data: dataObject,
+                //     headers: {
+                //         'Content-Type': 'application/json'
+
+                //     }
+                // })
+                //     .then((response) => {
+                //         console.log(response.data);
+                //     }, (error) => {
+                //         console.log(error);
+                //     });
 
             })
         }
@@ -179,8 +285,7 @@ for (let obj of addExercises) {
 
             let exName = evt.target.previousElementSibling.previousElementSibling.value
             let exStyle = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value;
-            let today = new Date();
-            let eDate = today.toISOString().slice(0, 10);
+
 
             let dataObject = {
 
@@ -238,7 +343,7 @@ for (let obj of addExercises) {
     })
 }
 
-
+//Speichern der Uebungssaetze in die Datenbank
 function saveButtonListener(btn) {
     btn.addEventListener('click', (evt) => {
 
@@ -286,7 +391,10 @@ function saveButtonListener(btn) {
         [...evt.target.parentElement.children].forEach((element) => {
             element.disabled = "true"
         })
+
         //um sachen disabeled zu lassen bei Relaoding, Session verwenden. 
+
+        sessionStorage.setItem("disable" + eName + setCount, true);
 
     })
 

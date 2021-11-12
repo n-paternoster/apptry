@@ -15,33 +15,9 @@
 </head>
 
 <body>
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    <a class="nav-link active" aria-current="page" href="/Exercises">Exercise</a>
-                    <a class="nav-link" ">Current</a>
-
-                </div>
-            </div>
-        </div>
-    </nav> -->
-
     <h1>Selected Exercises</h1>
     <!-- Erstellt für jede ausgewählte Übung ein eigenes Akkordeon und Ausfüll vorm.  -->
-
-
     <% for(let i=0 ; i < nameArray.length ; i++) {%>
-
-
-
-
         <div class=" accordion-item">
             <h2 class="accordion-header" id="flush-headingOne<%= i %>">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -53,16 +29,14 @@
             <div id="flush-collapseOne<%= i %>" class="accordion-collapse collapse"
                 aria-labelledby="flush-headingOne<%= i %>" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <!-- //Daten ab hier werden selbststädnig geöffnet// -->
+                    <!-- //Daten ab hier werden selbstständig geöffnet// -->
                     <div class="styleWeight">
                         <table class="tabel-content">
                             <thead>
                                 <tr>
-
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <tr class="tr-First">
                                     <td>
                                         Sets
@@ -75,11 +49,7 @@
                                     </td>
                                 </tr>
                                 <% if (typeof data !=='0' && data.length> 0) {
-
-
                                     for(let r=0 ; r < data[i].length ; r++) {%>
-
-
                                         <tr>
                                             <td>
                                                 <%= data[i][r].exerciseSet %>. Set
@@ -91,10 +61,8 @@
                                                 x <%= data[i][r].exerciseRep %>
                                             </td>
                                         </tr>
-
                                         <% }} %>
                             </tbody>
-
                         </table>
                     </div>
                     <div id="Set1">
@@ -129,4 +97,21 @@
 
         <% } %>
             <script src="/js/app.js"></script>
+            <script>
+
+                const inputs = document.querySelectorAll('input')
+                for (el of inputs) {
+                    let set = el.parentElement.id;
+                    let name = el.parentElement.parentElement.parentElement.parentElement.children[0].innerText
+                    console.log(set, name, window.sessionStorage.getItem("disable" + name + set))
+                    if (window.sessionStorage.getItem("disable" + name + set) === "true") {
+                        console.log("if is true")
+                        el.disabled = true;
+                    }
+
+                }
+
+
+
+            </script>
 </body>

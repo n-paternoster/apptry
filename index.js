@@ -140,7 +140,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
             if (controleDay == eDate) {
                 console.log("iftoday")
                 nameArray.push(name)
-                const daybefore = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $ne: Day }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(3);
+                const daybefore = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $ne: Day }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
                 let beforeday = daybefore[0].exerciseDate;
                 console.log("daybefor", beforeday)
                 const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: beforeday }, 'exerciseWeight exerciseRep exerciseSet')

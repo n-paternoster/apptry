@@ -27,6 +27,11 @@ initializePassport(
 
 
 const users = [{
+    id: '1635875169289',
+    name: 'Emold',
+    email: 'emi90@gmx.de',
+    password: process.env.hashedEmold
+}, {
     id: '1635860869289',
     name: 'Pada',
     email: 'paternosterniklas@yahoo.de',
@@ -116,24 +121,57 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
     let nameArray = [];
     let data = [];
+    let todaysdata = [];
 
     for (let name of allNames) {
         // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
         const lastDay = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
+
+
         if (typeof lastDay !== 'undefined' && lastDay.length > 0) {
             // the array is defined and has at least one element
-            nameArray.push(name)
-            let Day = lastDay[0].exerciseDate;
-            const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
-            data.push(pDaten)
+
+            let today = new Date();
+            let eDate = today.toISOString().slice(0, 10);
+
+            const Day = lastDay[0].exerciseDate;
+            let controleDay = Day.toISOString().slice(0, 10);
+
+            if (controleDay == eDate) {
+                console.log("iftoday")
+                nameArray.push(name)
+                const daybefore = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $ne: Day }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(3);
+                let beforeday = daybefore[0].exerciseDate;
+                console.log("daybefor", beforeday)
+                const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: beforeday }, 'exerciseWeight exerciseRep exerciseSet')
+                console.log(pDaten)
+                data.push(pDaten)
+                const todayDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
+                todaysdata.push(todayDaten);
+
+
+
+
+
+            } else {
+
+                const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
+
+                data.push(pDaten)
+                nameArray.push(name)
+                todaysdata.push(0);
+            }
+
+
         } else {
             nameArray.push(name)
             data.push(0)
+            todaysdata.push(0);
         }
 
     }
 
-    res.render("pExercises.ejs", { nameArray, data });
+    res.render("pExercises.ejs", { nameArray, data, todaysdata });
 
 })
 

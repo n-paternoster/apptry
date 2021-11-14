@@ -1,6 +1,7 @@
 const express = require("express");
 // const bodyParser = require('body-parser');
-var forceSsl = require('express-force-ssl');
+// const forceSsl = require('express-force-ssl');
+
 
 
 
@@ -345,4 +346,4 @@ httpsServer.listen(443, () => {
 });
 
 
-app.use(forceSsl)
+// app.use(forceSsl)

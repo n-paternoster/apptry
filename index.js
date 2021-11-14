@@ -328,3 +328,9 @@ httpsServer.listen(443, () => {
 });
 
 
+http.get('*', function (req, res) {
+    res.redirect('https://padadev.com' + req.url);
+
+    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+    // res.redirect('https://example.com' + req.url);
+})

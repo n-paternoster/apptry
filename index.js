@@ -21,8 +21,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use((req, res, next) => {
     if (process.env.NODE_ENV === 'production') {
         if (req.headers.host === 'padadev.com')

@@ -1,5 +1,21 @@
 const express = require("express");
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+    if (process.env.NODE_ENV === 'production') {
+        if (req.headers.host === 'padadev.com')
+            return res.redirect(301, 'https://www.padadev.com');
+        if (req.headers['x-forwarded-proto'] !== 'https')
+            return res.redirect('https://' + req.headers.host + req.url);
+        else
+            return next();
+    } else
+        return next();
+});
+
+
+
 const cors = require('cors');
 
 const https = require('https');
@@ -319,15 +335,7 @@ const httpsServer = https.createServer({
     cert: fs.readFileSync('/etc/letsencrypt/live/padadev.com/fullchain.pem'),
 }, app);
 
-app.enable('trust proxy')
-app.use(function (request, response, next) {
 
-    if (process.env.NODE_ENV != 'development' && !request.secure) {
-        return response.redirect("https://" + request.headers.host + request.url);
-    }
-
-    next();
-})
 
 
 httpServer.listen(80, () => {

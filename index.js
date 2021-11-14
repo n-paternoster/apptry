@@ -319,6 +319,17 @@ const httpsServer = https.createServer({
     cert: fs.readFileSync('/etc/letsencrypt/live/padadev.com/fullchain.pem'),
 }, app);
 
+app.enable('trust proxy')
+app.use(function (request, response, next) {
+
+    if (process.env.NODE_ENV != 'development' && !request.secure) {
+        return response.redirect("https://" + request.headers.host + request.url);
+    }
+
+    next();
+})
+
+
 httpServer.listen(80, () => {
     console.log('HTTP Server running on port 80');
 });
@@ -328,9 +339,3 @@ httpsServer.listen(443, () => {
 });
 
 
-http.get('*', function (req, res) {
-    res.redirect('https://padadev.com' + req.url);
-
-    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
-    // res.redirect('https://example.com' + req.url);
-})

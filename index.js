@@ -99,7 +99,6 @@ mongoose.connect(process.env.mongoLink)
 
 
 
-app.use(forceSsl);
 
 
 

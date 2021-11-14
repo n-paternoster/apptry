@@ -1,4 +1,11 @@
 const express = require("express");
+
+const cors = require('cors');
+
+const https = require('https');
+const http = require('http');
+
+const fs = require('fs');
 const app = express();
 const path = require("path");
 // const helmet = require("helmet");
@@ -82,6 +89,7 @@ mongoose.connect(process.env.mongoLink)
 
 // app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.static("public"));
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }))
@@ -305,10 +313,18 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
-app.listen(80, () => {
-    console.log("Listening on Port 80")
-})
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/padadev.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/padadev.com/fullchain.pem'),
+}, app);
 
+httpServer.listen(80, () => {
+    console.log('HTTP Server running on port 80');
+});
 
+httpsServer.listen(443, () => {
+    console.log('HTTPS Server running on port 443');
+});
 
 

@@ -1,6 +1,6 @@
 const express = require("express");
-
-
+// const bodyParser = require('body-parser');
+// var forceSsl = require('express-force-ssl');
 
 
 
@@ -22,16 +22,11 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 
 
-app.use((req, res, next) => {
-    if (process.env.NODE_ENV === 'production') {
-        if (req.headers.host === 'padadev.com')
-            return res.redirect(301, 'https://www.padadev.com');
-        if (req.headers['x-forwarded-proto'] !== 'https')
-            return res.redirect('https://' + req.headers.host + req.url);
-        else
-            return next();
-    } else
-        return next();
+app.use(function (req, res, next) {
+    if (!req.secure) {
+        return res.redirect(['https://', req.get('Host'), req.url].join(''));
+    }
+    next();
 });
 
 
@@ -100,6 +95,12 @@ mongoose.connect(process.env.mongoLink)
         console.log(err)
     })
 
+
+
+
+app.use(forceSsl);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
@@ -329,7 +330,7 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
-// const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 const httpsServer = https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/padadev.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/padadev.com/fullchain.pem'),
@@ -338,9 +339,9 @@ const httpsServer = https.createServer({
 
 
 
-// httpServer.listen(80, () => {
-//     console.log('HTTP Server running on port 80');
-// });
+httpServer.listen(80, () => {
+    console.log('HTTP Server running on port 80');
+});
 
 httpsServer.listen(443, () => {
     console.log('HTTPS Server running on port 443');

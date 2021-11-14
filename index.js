@@ -1,6 +1,6 @@
 const express = require("express");
 // const bodyParser = require('body-parser');
-// var forceSsl = require('express-force-ssl');
+var forceSsl = require('express-force-ssl');
 
 
 
@@ -99,8 +99,7 @@ mongoose.connect(process.env.mongoLink)
 
 
 app.use(forceSsl);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+
 
 
 
@@ -337,8 +336,6 @@ const httpsServer = https.createServer({
 }, app);
 
 
-
-
 httpServer.listen(80, () => {
     console.log('HTTP Server running on port 80');
 });
@@ -348,3 +345,4 @@ httpsServer.listen(443, () => {
 });
 
 
+app.use(forceSsl)

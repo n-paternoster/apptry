@@ -122,3 +122,13 @@ table{
 td{
     border: 1px solid rgb(0, 0, 0);
 }
+
+.centering{
+    text-align: center;
+}
+
+hr.rounded {
+  margin-left: 5%;
+  width: 90%;
+  border-top: 8px solid #bbb;
+  border-radius: 5px;}

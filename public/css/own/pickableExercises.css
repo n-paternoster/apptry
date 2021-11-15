@@ -65,6 +65,7 @@ label{
     text-decoration: none;
     font-weight: 200;
     text-align: center;
+    width: 30%;
 
 }
 .buttonGet{
@@ -80,6 +81,7 @@ label{
     text-decoration: none;
     font-weight: 200;
     text-align: center;
+    width: 30%;
 }
 
 .buttonGet::after{
@@ -118,7 +120,7 @@ select.form-control{
     text-align: center;
     background-color:#2b2b30 ;
     margin-bottom: 2%;
-    margin-top: 1%;
+    margin-top: 2% !important;
 }
 
 input.forming:active{

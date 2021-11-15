@@ -252,7 +252,7 @@ for (let obj of addExercises) {
         inputStyle.appendChild(option8);
 
         inputName.setAttribute("type", "string")
-        inputName.classList.toggle("forming")
+        inputName.classList.toggle("form-control")
         inputName.setAttribute("placeholder", "Exercise Name")
 
         inputStyle.setAttribute("type", "string")

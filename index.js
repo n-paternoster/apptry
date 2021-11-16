@@ -159,7 +159,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
             let today = new Date();
             let eDate = today.toISOString().slice(0, 10);
 
-            const Day = lastDay[0].exerciseDate;
+            let Day = lastDay[0].exerciseDate;
             let controleDay = Day.toISOString().slice(0, 10);
 
             if (controleDay == eDate) {

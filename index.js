@@ -162,6 +162,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
             let Day = lastDay[0].exerciseDate;
             let controleDay = Day.toISOString().slice(0, 10);
 
+
             if (controleDay == eDate) {
 
                 nameArray.push(name)
@@ -169,14 +170,15 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
                 console.log(daybefore)
                 if (typeof daybefore !== 'undefined') {
 
-                    data.push(0)
-
-                }
-                else {
-
                     let beforeday = daybefore[0].exerciseDate;
                     const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: beforeday }, 'exerciseWeight exerciseRep exerciseSet')
                     data.push(pDaten)
+
+
+                }
+                else {
+                    data.push(0)
+
                 }
 
 

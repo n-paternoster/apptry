@@ -22,14 +22,16 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 
+if (process.env.NODE_ENV === 'production') {
+    //do production stuff
 
-app.use(function (req, res, next) {
-    if (!req.secure) {
-        return res.redirect(['https://', req.get('Host'), req.url].join(''));
-    }
-    next();
-});
-
+    app.use(function (req, res, next) {
+        if (!req.secure) {
+            return res.redirect(['https://', req.get('Host'), req.url].join(''));
+        }
+        next();
+    });
+}
 
 //Passwortsachen
 const initializePassport = require('./passport-config')

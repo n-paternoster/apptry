@@ -16,6 +16,7 @@ h1 {
      text-align: center;
 
 }
+
 .accordion-button:not(.collapsed){
 
     background-color:#2b2b30 !important;
@@ -150,25 +151,7 @@ background-color:#2b2b30 ;
 
 }
 
-/* input.forming:active{
-background-color:#2b2b30 ;
-color: #EFEFF1;
-}
 
-
-input.forming{
-
-color: #EFEFF1;
-width: 90%;
-margin-left: 5% !important;
-margin-right: 5% !important;
-text-align: center;
-background-color:#2b2b30 ;
-border-radius: 5px;
-margin-top: 0.5em ;
-margin-bottom: 0.5em ;
-
-} */
 
 option{
 background-color:#2b2b30 ;
@@ -179,16 +162,6 @@ color: #EFEFF1;
 color:    #efeff1 !important;
 font-style: italic;
 }
-
-/* input.forming[type="string"], textarea {
-
-color: #EFEFF1 !important;
-background-color: #2b2b30 !important;
-text-align: center;
-font-size: 110% !important;
-
-} */
-
 
 input[type="string"], textarea {
 
@@ -207,3 +180,18 @@ input[type="string"]:disabled, textarea:disabled{
     background-color: #2b2b30 !important;
 
 }
+
+.dismiss-style{
+   
+    width: 30%;
+    
+    background-color: #18181B;
+    color:#FFFFFF;
+    
+    text-align: center;
+    
+    border: 0.1em solid #FFFFFF;
+    vertical-align: middle;
+}
+
+

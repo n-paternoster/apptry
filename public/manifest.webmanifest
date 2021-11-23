@@ -1,0 +1,33 @@
+{
+    "short_name": "Padappter",
+    "name": "Padappter: Gym-Tracker",
+    "icons": [
+        {
+            "src": "/iconx/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/iconx/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/iconx/android-chrome-maskable-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/iconx/android-chrome-maskable-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#18181B",
+    "display": "standalone",
+    "theme_color": "#18181B",
+    "description": "Gym-Tracker"
+}

@@ -1,7 +1,4 @@
 
-
-
-
 const allBodyparts = ["Biceps", "Triceps", "Legs", "Chest", "Abdominal", "Shoulders", "Lower Back", "Upper Back"]
 const saveSetButtons = document.querySelectorAll('.saveSetButton');
 
@@ -396,6 +393,25 @@ function saveButtonListener(btn) {
 
         sessionStorage.setItem("disable" + eName + setCount, true);
 
+        const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, ""));
+        console.log('.TodayTable' + eName.replace(/\s/g, ""))
+        const tableRow = document.createElement("tr")
+        const tableDataSet = document.createElement("td")
+        const tableDataWeight = document.createElement("td")
+        const tableDataRep = document.createElement("td")
+
+        tableDataWeight.innerText = eWeight;
+        tableDataSet.innerText = setNum;
+        tableDataRep.innerText = eRep;
+
+        tableRow.appendChild(tableDataSet)
+        tableRow.appendChild(tableDataWeight)
+        tableRow.appendChild(tableDataRep)
+
+        table.appendChild(tableRow)
+        console.log("test")
+
+
     })
 
 
@@ -527,5 +543,55 @@ function createGraph(dataName, Data) {
 
         }
     })
+
+}
+
+
+
+
+
+
+const touchsurface = document.querySelectorAll('.Touchevent')
+
+
+for (touch of touchsurface) {
+
+    let mc = new Hammer(touch);
+    let toggle = true
+
+
+    mc.on('swipeleft', (evt) => {
+
+        if (toggle === true) {
+
+            toggle = false
+
+            const dismissButton = document.createElement("button")
+            dismissButton.innerText = "Dismiss for Today"
+            dismissButton.classList.add("dismiss-style")
+            dismissButton.classList.add("dismissFunction")
+
+            evt.target.setAttribute("style", "width: 70%")
+
+            evt.target.parentElement.appendChild(dismissButton)
+
+
+
+            dismissButton.addEventListener("click", (evt) => {
+
+                const exerciseDiv = evt.target.parentElement.parentElement
+
+                exerciseDiv.remove();
+
+            })
+
+
+        }
+    })
+
+
+
+
+
 
 }

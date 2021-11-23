@@ -6,21 +6,19 @@ const express = require("express");
 
 
 const cors = require('cors');
-
 const https = require('https');
 const http = require('http');
-
 const fs = require('fs');
 const app = express();
 const path = require("path");
-// const helmet = require("helmet");
-const { body, validationResult } = require('express-validator');
+// const { body, validationResult } = require('express-validator');
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const MongoStore = require('connect-mongo');
 
 if (process.env.NODE_ENV === 'production') {
     //do production stuff
@@ -84,9 +82,30 @@ const users = [{
 
 
 //Alles DatenBank
+
 const mongoose = require("mongoose");
 const Exercise = require("./models/exercise");
 const Daten = require("./models/daten");
+const store = MongoStore.create({
+    mongoUrl: process.env.mongoLink,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'squirrel'
+    }
+});
+store.on("error", function (e) {
+    console.log("Sessionstore Error")
+})
+
+const sessionConfig = {
+
+    store,
+    name: 'session',
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    maxAge: 1000 * 60 * 60 * 3
+}
 
 mongoose.connect(process.env.mongoLink)
     .then(() => {
@@ -99,25 +118,12 @@ mongoose.connect(process.env.mongoLink)
     })
 
 
-
-
-
-
-
-
-// app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.static("public"));
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(express.urlencoded({ extended: false }))
 app.use(flash())
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    maxAge: 1000 * 60 * 60 * 2    //2h dauer
-}))
+app.use(session(sessionConfig))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
@@ -129,7 +135,7 @@ app.set("public", path.join(__dirname, "/public"))
 
 app.get('/', checkAuthenticated, (req, res) => {
 
-    res.render("FitnessTracker")
+    res.render("index")
 
 
 })
@@ -224,7 +230,7 @@ app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
 
     const check = await Daten.exists({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false })
     console.log(check)
-
+    //Doublication check
     if (check === true) {
 
         const replace = await Daten.replaceOne({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false }, data)
@@ -234,14 +240,6 @@ app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
         const newDaten = new Daten(data)
         await newDaten.save();
     }
-
-
-    req.session.enabled = true
-
-
-
-
-
 })
 
 app.post("/Datenbank/newExercise", checkAuthenticated, async (req, res) => {
@@ -342,19 +340,25 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer({
-    key: fs.readFileSync('/etc/letsencrypt/live/padadev.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/padadev.com/fullchain.pem'),
-}, app);
 
+if (process.env.NODE_ENV === 'production') {
+    //do production stuff
+
+    const httpsServer = https.createServer({
+        key: fs.readFileSync('/etc/letsencrypt/live/padadev.com/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/padadev.com/fullchain.pem'),
+    }, app);
+
+    httpsServer.listen(443, () => {
+        console.log('HTTPS Server running on port 443');
+    });
+
+}
 
 httpServer.listen(80, () => {
     console.log('HTTP Server running on port 80');
 });
 
-httpsServer.listen(443, () => {
-    console.log('HTTPS Server running on port 443');
-});
 
 
 

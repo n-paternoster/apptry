@@ -136,21 +136,5 @@
                 <button class="addExercise buttonAll centering">Add Exercise</button>
             </div>
             <script src="/js/app.js"></script>
-            <script>
 
-                const inputs = document.querySelectorAll('input')
-                for (el of inputs) {
-                    let set = el.parentElement.id;
-                    let name = el.parentElement.parentElement.parentElement.parentElement.children[0].innerText
-
-                    if (window.sessionStorage.getItem("disable" + name + set) === "true") {
-                        console.log("if is true")
-                        el.disabled = true;
-                    }
-
-                }
-
-
-
-            </script>
 </body>

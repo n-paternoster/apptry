@@ -21,7 +21,7 @@ for (let obj of selectExercise) {
             url: '/Datenbank/selectExercise',
             params: dataObject,
         })
-        console.log(res.data)
+
 
 
         let newDiv = document.createElement("div");
@@ -76,7 +76,7 @@ for (let obj of selectExercise) {
                     url: '/Datenbank/selectName',
                     params: dataObject,
                 })
-                console.log(res.data)
+
                 createGraph(selectName, res.data);
 
 
@@ -148,32 +148,6 @@ for (let obj of selectExercise) {
 
 
 
-
-                // let dataObject = {
-                //     exerciseDate: dateInput.value,
-                //     exerciseName: selectName,
-                //     exerciseType: selType,
-                //     basicExercise: true,
-
-
-
-
-
-                // }
-                // axios({
-                //     method: 'post',
-                //     url: '/Datenbank/newExercise',
-                //     data: dataObject,
-                //     headers: {
-                //         'Content-Type': 'application/json'
-
-                //     }
-                // })
-                //     .then((response) => {
-                //         console.log(response.data);
-                //     }, (error) => {
-                //         console.log(error);
-                //     });
 
             })
         }
@@ -285,14 +259,9 @@ for (let obj of addExercises) {
 
 
             let dataObject = {
-
                 exerciseName: exName,
                 exerciseType: exStyle,
                 basicExercise: true,
-
-
-
-
             }
             axios({
                 method: 'post',
@@ -300,34 +269,24 @@ for (let obj of addExercises) {
                 data: dataObject,
                 headers: {
                     'Content-Type': 'application/json'
-
                 }
             })
                 .then((response) => {
-                    console.log(response.data);
+                    ;
                 }, (error) => {
                     console.log(error);
                 });
-
-
             let saved = document.createElement("p");
             saved.innerText = "Saved!"
             newDiv.appendChild(saved);
-
-
-
-
-
             setTimeout(function () {
 
                 newDiv.remove();
+                location.reload();
                 addExerciseButton.style.visibility = "visible";
 
-            }, 1000);
-
-
+            }, 500);
         })
-
         //Dismiss button
         deleteButton.addEventListener('click', (evt) => {
 
@@ -335,8 +294,6 @@ for (let obj of addExercises) {
             newDiv.remove();
 
         })
-
-
     })
 }
 
@@ -347,16 +304,13 @@ function saveButtonListener(btn) {
         let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].innerText // exerciseName
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
-        let setCount = evt.target.parentElement.id //setCount //"Set1"
+        let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, ""))
+        let setNum = setCount.children.length;
+
         let today = new Date();
         let eDate = today.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
-        console.log(eDate)
-        console.log(today)
 
 
-
-        let setNum = setCount.match(/\d/g);
-        setNum = setNum.join("");
         let dataObject = {
 
             exerciseName: eName,
@@ -365,8 +319,6 @@ function saveButtonListener(btn) {
             exerciseSet: setNum,
             exerciseDate: eDate,
             basicExercise: false,
-            uKey: Math.random() * Date.now()
-
 
         }
         axios({
@@ -379,37 +331,38 @@ function saveButtonListener(btn) {
             }
         })
             .then((response) => {
-                console.log(response.data);
+
             }, (error) => {
                 console.log(error);
             });
-        //children ist kein Array(da HTML) --> umwandeln zu Array
-        //Disabled das jeweilige Set nach Speicherung
-        [...evt.target.parentElement.children].forEach((element) => {
-            element.disabled = "true"
-        })
 
-        //um sachen disabeled zu lassen bei Relaoding, Session verwenden. 
 
-        sessionStorage.setItem("disable" + eName + setCount, true);
+
+        let inputWeight = evt.target.previousElementSibling
+        let inputRep = evt.target.previousElementSibling.previousElementSibling
+
+        inputWeight.value = null;
+        inputRep.value = null;
+
+
 
         const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, ""));
-        console.log('.TodayTable' + eName.replace(/\s/g, ""))
+
         const tableRow = document.createElement("tr")
         const tableDataSet = document.createElement("td")
         const tableDataWeight = document.createElement("td")
         const tableDataRep = document.createElement("td")
 
-        tableDataWeight.innerText = eWeight;
-        tableDataSet.innerText = setNum;
-        tableDataRep.innerText = eRep;
+        tableDataWeight.innerText = `${eWeight} kg`;
+        tableDataSet.innerText = `${setNum}.`;
+        tableDataRep.innerText = `x ${eRep}`;
 
         tableRow.appendChild(tableDataSet)
         tableRow.appendChild(tableDataWeight)
         tableRow.appendChild(tableDataRep)
 
         table.appendChild(tableRow)
-        console.log("test")
+
 
 
     })
@@ -491,7 +444,7 @@ function createGraph(dataName, Data) {
     //Aufteilen aller Übung auf einzelne Tage
     let dataset = Data.selectedData
 
-    console.log(dataset)
+
 
 
     //Sortieren der Übungen aufsteigend funktionier!??!
@@ -521,10 +474,6 @@ function createGraph(dataName, Data) {
         dateLabel.push(label)
         weights.push(weight)
     }
-    // console.log(nestedMeanWeight)
-    // console.log(nestedMeanReps)
-    // console.log(weights)
-    // console.log(dateLabel)
 
 
 

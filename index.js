@@ -1,17 +1,10 @@
 const express = require("express");
-// const bodyParser = require('body-parser');
-// const forceSsl = require('express-force-ssl');
-
-
-
-
 const cors = require('cors');
 const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const app = express();
 const path = require("path");
-// const { body, validationResult } = require('express-validator');
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const passport = require('passport')
@@ -94,7 +87,7 @@ const store = MongoStore.create({
     }
 });
 store.on("error", function (e) {
-    console.log("Sessionstore Error")
+    console.log("Session store Error")
 })
 
 const sessionConfig = {
@@ -116,6 +109,14 @@ mongoose.connect(process.env.mongoLink)
         console.log("Mongo ERRROR")
         console.log(err)
     })
+
+
+
+
+
+
+
+
 
 
 app.use(express.static("public"));

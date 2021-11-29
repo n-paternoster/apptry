@@ -206,3 +206,9 @@ select.form-select{
     margin-bottom: 2%;
     margin-top: 2% !important;
 }
+
+#loadingStyle{
+
+        color:#EFEFF1; 
+        font-size: 1.5rem;
+}

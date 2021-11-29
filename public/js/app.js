@@ -67,18 +67,23 @@ for (let obj of selectExercise) {
                 }
 
                 //Erstellen Graph HTML Elemente
+                //Loading Element
                 let LoadingEvent = document.createElement("p")
                 LoadingEvent.innerText = "Loading Graph..."
+                LoadingEvent.setAttribute("id", "loadingStyle")
                 evt.target.insertAdjacentElement('afterend', LoadingEvent)
+                //Exercise Name
                 selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
                 let dataObject = { exerciseName: selectName }
-
+                //GET Data
                 const res = await axios({
                     method: 'get',
                     url: '/Datenbank/selectName',
                     params: dataObject,
                 })
+
                 LoadingEvent.remove()
+
                 let div = document.createElement("div")
                 div.setAttribute("class", "container")
                 let canvas = document.createElement("canvas")

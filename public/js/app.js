@@ -67,7 +67,9 @@ for (let obj of selectExercise) {
                 }
 
                 //Erstellen Graph HTML Elemente
-
+                let LoadingEvent = document.createElement("p")
+                LoadingEvent.innerText = "Loading Graph..."
+                evt.target.insertAdjacentElement('afterend', LoadingEvent)
                 selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
                 let dataObject = { exerciseName: selectName }
 
@@ -76,6 +78,7 @@ for (let obj of selectExercise) {
                     url: '/Datenbank/selectName',
                     params: dataObject,
                 })
+                LoadingEvent.remove()
                 let div = document.createElement("div")
                 div.setAttribute("class", "container")
                 let canvas = document.createElement("canvas")

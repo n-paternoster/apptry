@@ -66,6 +66,12 @@ for (let obj of selectExercise) {
                     oldChart.remove()
                 }
 
+                //GET DATEN
+                const res = await axios({
+                    method: 'get',
+                    url: '/Datenbank/selectName',
+                    params: dataObject,
+                })
                 //Erstellen Graph HTML Elemente
                 let div = document.createElement("div")
                 div.setAttribute("class", "container")
@@ -75,13 +81,7 @@ for (let obj of selectExercise) {
                 evt.target.parentElement.parentElement.insertBefore(div, evt.target.parentElement.nextElementSibling)
                 selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
                 let dataObject = { exerciseName: selectName }
-
-                const res = await axios({
-                    method: 'get',
-                    url: '/Datenbank/selectName',
-                    params: dataObject,
-                })
-
+                //Graph function
                 createGraph(selectName, res.data);
 
 

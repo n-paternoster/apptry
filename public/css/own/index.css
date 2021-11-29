@@ -14,6 +14,7 @@ h1 {
    padding-bottom: 0.2em;
    margin: 0;
    text-align: center;
+   font-size: 4.5rem;
 
 }
 .card {
@@ -46,7 +47,7 @@ h1 {
     
     
     width: 98%;
-    height: 44%;
+    height: 40%;
     background: #1F1F23 ;
     
     padding: 1rem 1.5rem;

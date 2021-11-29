@@ -269,12 +269,14 @@ app.get("/Datenbank/selectExercise", checkAuthenticated, async (req, res) => {
 
     const values = Object.values(req.query);
     // const selected = Object.values(JSON.stringify(req.body));
+    let name = req.user.name
 
 
 
     let selectedExercises = await Exercise.find({
         exerciseType: values[0],
-        basicExercise: true
+        basicExercise: true,
+        username: name
     })
 
 
@@ -285,10 +287,13 @@ app.get("/Datenbank/selectExercise", checkAuthenticated, async (req, res) => {
 })
 app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
     const values = Object.values(req.query);
+    let name = req.user.name
 
     let selectedData = await Daten.find({
+
         exerciseName: values[0],
         basicExercise: false,
+        username: name
 
     }, "exerciseDate exerciseWeight exerciseRep exerciseSet")
     console.log(values)

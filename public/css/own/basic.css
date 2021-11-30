@@ -17,6 +17,17 @@ h1 {
      font-size: 8vw;
 
 }
+h2 {
+    color: #EFEFF1 !important;
+    background-color: #1F1F23  !important;
+     text-align: center;
+     padding-top: 1rem !important;
+     padding-bottom: 1rem !important;
+     margin-bottom: 0 !important;
+     margin-top: 1rem !important;
+   
+
+}
 
 .accordion-button:not(.collapsed){
 
@@ -99,6 +110,7 @@ input[type="number"]:disabled, textarea:disabled{
     height: 50%;
     text-align: center;
     color: #efeff1;
+    background-color: #1F1F23 !important;
     
 }
 
@@ -108,6 +120,14 @@ input[type="number"]:disabled, textarea:disabled{
     
     
 }
+
+#bodyChart{
+    color: #efeff1;
+    background-color: #2b2b30;
+    
+    
+}
+
 .tr-First{
     padding-left: 10px !important;
     padding-right: 10px !important;
@@ -128,6 +148,8 @@ td{
 
 .centering{
     text-align: center;
+    background-color: #1F1F23 !important;
+    
 }
 
 hr.rounded {
@@ -204,11 +226,23 @@ select.form-select{
     text-align: center;
     background-color:#2b2b30 ;
     margin-bottom: 2%;
-    margin-top: 2% !important;
+    
 }
 
-#loadingStyle{
+.loadingStyle{
 
         color:#EFEFF1; 
         font-size: 1.5rem;
+}
+
+input[type="number"], textarea {
+
+    color: #EFEFF1 !important;
+    background-color: #2b2b30 !important;
+    text-align: center;
+    width: 90% !important;
+    font-size: 110% !important;
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+
 }

@@ -79,6 +79,7 @@ const users = [{
 const mongoose = require("mongoose");
 const Exercise = require("./models/exercise");
 const Daten = require("./models/daten");
+const Weight = require("./models/weight");
 const store = MongoStore.create({
     mongoUrl: process.env.mongoLink,
     touchAfter: 24 * 60 * 60,
@@ -262,7 +263,25 @@ app.post("/Datenbank/newExercise", checkAuthenticated, async (req, res) => {
 
 })
 
+app.post("/Datenbank/newWeight", checkAuthenticated, async (req, res) => {
 
+
+
+    let name = req.user.name
+    let data = req.body
+
+    data["username"] = name;
+
+
+
+
+    const newWeight = new Weight(data)
+    await newWeight.save();
+
+
+
+
+})
 
 
 app.get("/Datenbank/selectExercise", checkAuthenticated, async (req, res) => {
@@ -299,6 +318,17 @@ app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
     console.log(values)
     console.log(selectedData)
     res.send({ selectedData })
+})
+
+app.get("/Datenbank/getWeight", checkAuthenticated, async (req, res) => {
+    const values = Object.values(req.query);
+    let name = req.user.name
+
+    let selectedWeight = await Weight.find({
+        username: name
+    })
+
+    res.send({ selectedWeight })
 })
 
 app.get('/Exercises', checkAuthenticated, (req, res) => {

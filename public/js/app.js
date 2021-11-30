@@ -1,112 +1,9 @@
 
-const allBodyparts = ["Biceps", "Triceps", "Legs", "Chest", "Abdominal", "Shoulders", "Lower Back", "Upper Back"]
-const saveSetButtons = document.querySelectorAll('.saveSetButton');
-
-
-const makenewSet = document.querySelectorAll('.addOneSet');
-
-const addExercises = document.querySelectorAll('.addExercise');
-
-const selectExercise = document.querySelectorAll('.selectExerc');
-//chartSelections auswählen der zu untersuchenden Uebungen
-for (let obj of selectExercise) {
-    obj.addEventListener('click', async function (evt) {
-
-        let selType = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
-        let dataObject = { exerciseType: selType }
-
-
-        const res = await axios({
-            method: 'get',
-            url: '/Datenbank/selectExercise',
-            params: dataObject,
-        })
-
-
-
-        let newDiv = document.createElement("div");
-        let inputStyle = document.createElement("select");
-        let addExerciseButton = evt.target;
-        // addExerciseButton.disabled = true;
-
-
-        let newButton = document.createElement("button");
-
-        newDiv.appendChild(inputStyle);
-        newDiv.appendChild(newButton);
-
-        //Form Klassen etc.
-        inputStyle.classList.toggle("form-control");
-        newButton.innerText = "Show Chart";
-
-
-        newButton.className = "selcSpefExcer buttonAll";
-
-        for (el of res.data.selectedExercises) {
-            let Name = el.exerciseName;
-            let option = document.createElement("option")
-            option.value = Name
-            option.innerText = Name
-            inputStyle.appendChild(option);
-
-            let place = evt.target.parentElement;
-
-            place.insertBefore(newDiv, evt.target.nextSibling)
-
-        }
-        let selectName = [];
-        const searchExerciseData = document.querySelectorAll('.selcSpefExcer');
-        for (let obj of searchExerciseData) {
-            obj.addEventListener('click', async function (evt) {
-
-                //Ersetzen der vorherigen Graphen
-                let existChart = evt.target.parentElement.nextElementSibling
-                if (existChart !== null) {
-                    let oldChart = evt.target.parentElement.parentElement.lastChild
-                    oldChart.remove()
-                }
-
-                //Erstellen Graph HTML Elemente
-                //Loading Element
-                let LoadingEvent = document.createElement("p")
-                LoadingEvent.innerText = "Loading Graph..."
-                LoadingEvent.setAttribute("id", "loadingStyle")
-                evt.target.insertAdjacentElement('afterend', LoadingEvent)
-                //Exercise Name
-                selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
-                let dataObject = { exerciseName: selectName }
-                //GET Data
-                const res = await axios({
-                    method: 'get',
-                    url: '/Datenbank/selectName',
-                    params: dataObject,
-                })
-
-                LoadingEvent.remove()
-
-                let div = document.createElement("div")
-                div.setAttribute("class", "container")
-                let canvas = document.createElement("canvas")
-                canvas.setAttribute("id", "myChart")
-                div.appendChild(canvas)
-                evt.target.parentElement.parentElement.insertBefore(div, evt.target.parentElement.nextElementSibling)
-                createGraph(selectName, res.data);
-
-
-            })
-        }
-        //Ersetzen der vorher ausgewählten Übungen
-        let oldName = evt.target.nextElementSibling.nextElementSibling;
-        if (oldName !== null) { oldName.remove(); }
-
-
-    })
-}
-
-
+// const allBodyparts = ["Biceps", "Triceps", "Legs", "Chest", "Abdominal", "Shoulders", "Lower Back", "Upper Back"]
 
 
 //neue Übung in pickable Exercise machen
+const addExercises = document.querySelectorAll('.addExercise');
 for (let obj of addExercises) {
 
     obj.addEventListener('click', (evt) => {
@@ -315,14 +212,16 @@ function saveButtonListener(btn) {
 
 
 }
+
 //Speichern der Uebungssaetze in die Datenbank
+const saveSetButtons = document.querySelectorAll('.saveSetButton');
 for (let obj of saveSetButtons) {
     saveButtonListener(obj)
 
 }
 
-
 //neues Set in pExercises machen
+const makenewSet = document.querySelectorAll('.addOneSet');
 for (let obj of makenewSet) {
 
     obj.addEventListener('click', (evt) => {
@@ -382,79 +281,6 @@ for (let obj of makenewSet) {
     })
 }
 
-
-function createGraph(dataName, Data) {
-
-
-    //Aufteilen aller Übung auf einzelne Tage
-    let dataset = Data.selectedData
-
-
-
-
-    //Sortieren der Übungen aufsteigend 
-    const sortedDada = dataset.slice().sort((a, b) => b.exerciseDate - a.exerciseDate)
-    //Zusammenfassen der versch. Daten in ein Object
-    let nestedMeanWeight = d3.nest()
-        .key(function (d) { return d.exerciseDate; })
-        .rollup(function (m) {
-            return d3.mean(m, function (d) { return d.exerciseWeight });
-        })
-        .entries(sortedDada);
-    //Aufteilen der Daten in X und Y Array
-    let weights = [];
-    let dateLabel = [];
-    for (obj of nestedMeanWeight) {
-        let weight = obj.values
-        let unsliceLabel = obj.key
-        label = unsliceLabel.slice(0, 10);
-
-        dateLabel.push(label)
-        weights.push(weight)
-    }
-
-    const chart = document.getElementById("myChart")
-    let linechart = new Chart(chart, {
-        type: "line",
-        data: {
-            labels: dateLabel,
-            datasets: [{
-
-                data: weights,
-                borderColor: "#FFFFFF",
-
-            }]
-
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: dataName,
-                    color: "#FFFFFF"
-                }
-            },
-            scales: {
-                x: {
-                    type: 'time',
-                    time: {
-                        unit: 'day'
-                    }
-                }
-            }
-        }
-
-    })
-
-
-}
-
-
-
-
 //touch event
 const touchsurface = document.querySelectorAll('.Touchevent')
 for (touch of touchsurface) {
@@ -498,3 +324,33 @@ for (touch of touchsurface) {
 
 
 }
+
+//Weight InPUT
+const weightinputElement = document.getElementById("saveWeightButton")
+weightinputElement.addEventListener("click", (evt) => {
+    if (weightinputElement.previousElementSibling.value.length != 0) {
+        console.log(weightinputElement.previousElementSibling.value)
+        let weightData = evt.target.previousElementSibling.value
+        let today = new Date();
+        let eDate = today.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
+        let dataObject = {
+            weightDate: eDate,
+            weight: weightData
+        }
+
+
+        axios({
+            method: 'post',
+            url: '/Datenbank/newWeight',
+            data: dataObject,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+
+            }, (error) => {
+                console.log(error);
+            });
+    }
+})

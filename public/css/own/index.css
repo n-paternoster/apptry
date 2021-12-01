@@ -47,7 +47,7 @@ h1 {
     
     
     width: 98%;
-    height: 40%;
+    height: 30%;
     background: #1F1F23 ;
     
     padding: 1rem 1.5rem;
@@ -76,3 +76,48 @@ a {
     margin: 10px 0;
   }
   
+  .accordion-button:not(.collapsed){
+
+    background-color:#2b2b30 !important;
+    font-weight: bold ;
+    
+}
+.accordion-button{
+    background-color: #1F1F23 !important;
+    color: #EFEFF1 !important;
+    font-size: 4rem !important;
+    border-top: 0.1em solid #000000 !important;
+    text-align: center !important;
+    align-content: center;
+    display:block;
+}
+.accordion-item{
+    color: #EFEFF1;
+    background-color: #1F1F23;
+    text-align: center !important;
+    
+}
+.accordion-header{
+    align-content: center;
+}
+
+.accordion-button::after {
+
+  margin: 0 !important;
+}
+input[type="number"], textarea {
+
+  color: #EFEFF1 !important;
+  background-color: #2b2b30 !important;
+  text-align: center;
+  width: 90% !important;
+  font-size: 2rem;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+
+}
+
+::placeholder { 
+  color:    #efeff1 !important;
+  font-style: italic;
+  }

@@ -10,12 +10,47 @@
 
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/own/index.css">
+    <link rel="stylesheet" href="/css/own/basic.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
 
 <body>
     <h1>Padappter</h1>
+    <div class="weightAccordion">
+
+
+        <% if(!checkDate) {%>
+            <div class="accordion-item" id="weightAcc">
+
+                <div class=" d-flex flex-row accordion-header " id=" flush-headingOne">
+
+                    <button class="Touchevent accordion-button collapsed accordionButton" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
+                        aria-controls="flush-collapseOne">
+                        Add Todays Bodyweight
+                    </button>
+
+
+                </div>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+
+
+                        <div class="centering">
+                            <input type="number" class="form-control" placeholder="Bodyweight in kg" required>
+                            <button type="button" id="saveWeightButton" class="buttonAll">Save</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <% }%>
+
+
+    </div>
 
     <div class="card">
         <a href="/Exercises" class="main-link">Start Workout !</a>
@@ -28,6 +63,7 @@
 
 
     <script src="/js/script.js"></script>
+    <script src="/js/handler.js"></script>
 
 
 

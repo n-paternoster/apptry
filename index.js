@@ -135,9 +135,15 @@ app.set("views", path.join(__dirname, "/views"))
 app.set("public", path.join(__dirname, "/public"))
 
 
-app.get('/', checkAuthenticated, (req, res) => {
+app.get('/', checkAuthenticated, async (req, res) => {
 
-    res.render("index")
+    let name = req.user.name
+    let date = new Date();
+    let today = date.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
+
+    const checkDate = await Weight.exists({ username: name, weightDate: today })
+
+    res.render("index", { checkDate })
 
 
 })
@@ -265,7 +271,8 @@ app.post("/Datenbank/newExercise", checkAuthenticated, async (req, res) => {
 
 app.post("/Datenbank/newWeight", checkAuthenticated, async (req, res) => {
 
-
+    let date = new Date();
+    let today = date.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
 
     let name = req.user.name
     let data = req.body
@@ -273,14 +280,15 @@ app.post("/Datenbank/newWeight", checkAuthenticated, async (req, res) => {
     data["username"] = name;
 
 
+    const check = await Weight.exists({ username: name, weightDate: today })
+    if (check === true) {
 
+        const replace = await Weight.replaceOne({ username: name, weightDate: today }, data)
 
-    const newWeight = new Weight(data)
-    await newWeight.save();
-
-
-
-
+    } else {
+        const newWeight = new Weight(data)
+        await newWeight.save();
+    }
 })
 
 
@@ -327,6 +335,10 @@ app.get("/Datenbank/getWeight", checkAuthenticated, async (req, res) => {
     let selectedWeight = await Weight.find({
         username: name
     })
+
+
+
+
 
     res.send({ selectedWeight })
 })

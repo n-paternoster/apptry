@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', createWeightGraph(), false);
-
+//Körpergewichtgraph nach Laden der Seite Laden
 async function createWeightGraph() {
     let div = document.getElementById("center-bodyweight")
 
@@ -78,7 +78,7 @@ async function createWeightGraph() {
     })
 }
 
-
+//Auswählbarer Übungsgraph
 function createGraph(dataName, Data) {
 
 
@@ -199,7 +199,7 @@ for (let obj of selectExercise) {
         const searchExerciseData = document.querySelectorAll('.selcSpefExcer');
         for (let obj of searchExerciseData) {
             obj.addEventListener('click', async function (evt) {
-
+                evt.target.disable = true;
                 //Ersetzen der vorherigen Graphen
                 let existChart = evt.target.parentElement.nextElementSibling
                 if (existChart !== null) {
@@ -234,6 +234,7 @@ for (let obj of selectExercise) {
                 div.appendChild(canvas)
                 evt.target.parentElement.parentElement.insertBefore(div, evt.target.parentElement.nextElementSibling)
                 createGraph(selectName, res.data);
+                evt.target.disable = false;
 
 
             })

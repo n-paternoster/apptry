@@ -139,9 +139,9 @@ for (let obj of addExercises) {
     })
 }
 
-//Speichern der Uebungssaetze in die Datenbank
+// POST Speichern der Uebungssaetze in die Datenbank
 function saveButtonListener(btn) {
-    btn.addEventListener('click', (evt) => {
+    btn.addEventListener('click', async (evt) => {
 
         let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].innerText // exerciseName
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
@@ -163,7 +163,7 @@ function saveButtonListener(btn) {
             basicExercise: false,
 
         }
-        axios({
+        let res = await axios({
             method: 'post',
             url: '/Datenbank/newData',
             data: dataObject,
@@ -173,37 +173,46 @@ function saveButtonListener(btn) {
             }
         })
             .then((response) => {
+                console.log(response.data.loginToggle)
+                console.log(response.status)
+                if (!response.data.loginToggle) {
+                    let inputWeight = evt.target.previousElementSibling
+                    let inputRep = evt.target.previousElementSibling.previousElementSibling
 
+                    inputWeight.value = null;
+                    inputRep.value = null;
+
+
+
+                    const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, ""));
+
+                    const tableRow = document.createElement("tr")
+                    const tableDataSet = document.createElement("td")
+                    const tableDataWeight = document.createElement("td")
+                    const tableDataRep = document.createElement("td")
+
+                    tableDataWeight.innerText = `${eWeight} kg`;
+                    tableDataSet.innerText = `${setNum}.`;
+                    tableDataRep.innerText = `x ${eRep}`;
+
+                    tableRow.appendChild(tableDataSet)
+                    tableRow.appendChild(tableDataWeight)
+                    tableRow.appendChild(tableDataRep)
+
+                    table.appendChild(tableRow)
+                }
+                else {
+                    location.reload();
+                }
             }, (error) => {
+
                 console.log(error);
             });
 
 
 
-        let inputWeight = evt.target.previousElementSibling
-        let inputRep = evt.target.previousElementSibling.previousElementSibling
-
-        inputWeight.value = null;
-        inputRep.value = null;
 
 
-
-        const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, ""));
-
-        const tableRow = document.createElement("tr")
-        const tableDataSet = document.createElement("td")
-        const tableDataWeight = document.createElement("td")
-        const tableDataRep = document.createElement("td")
-
-        tableDataWeight.innerText = `${eWeight} kg`;
-        tableDataSet.innerText = `${setNum}.`;
-        tableDataRep.innerText = `x ${eRep}`;
-
-        tableRow.appendChild(tableDataSet)
-        tableRow.appendChild(tableDataWeight)
-        tableRow.appendChild(tableDataRep)
-
-        table.appendChild(tableRow)
 
 
 
@@ -213,14 +222,14 @@ function saveButtonListener(btn) {
 
 }
 
-//Speichern der Uebungssaetze in die Datenbank
+//POST Speichern der Uebungssaetze in die Datenbank
 const saveSetButtons = document.querySelectorAll('.saveSetButton');
 for (let obj of saveSetButtons) {
     saveButtonListener(obj)
 
 }
 
-//neues Set in pExercises machen
+//POST neues Set in pExercises machen
 const makenewSet = document.querySelectorAll('.addOneSet');
 for (let obj of makenewSet) {
 
@@ -281,7 +290,7 @@ for (let obj of makenewSet) {
     })
 }
 
-//touch event
+//GET touch event
 const touchsurface = document.querySelectorAll('.Touchevent')
 for (touch of touchsurface) {
 

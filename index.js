@@ -98,7 +98,7 @@ const sessionConfig = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    maxAge: 1000 * 60 * 60 * 3
+
 }
 
 mongoose.connect(process.env.mongoLink)
@@ -229,24 +229,32 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
 
 
-app.post("/Datenbank/newData", checkAuthenticated, async (req, res) => {
-    let name = req.user.name
-    let data = req.body
-    data["username"] = name;
-    console.log(data)
+app.post("/Datenbank/newData", async (req, res) => {
+    if (req.user != null) {
+        let name = req.user.name
+        let data = req.body
+        data["username"] = name;
+        console.log(data)
 
 
-    const check = await Daten.exists({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false })
-    console.log(check)
-    //Doublication check
-    if (check === true) {
+        const check = await Daten.exists({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false })
+        console.log(check)
+        //Doublication check
+        if (check === true) {
 
-        const replace = await Daten.replaceOne({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false }, data)
+            const replace = await Daten.replaceOne({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false }, data)
+            res.end()
+        } else {
+            console.log("else")
+            const newDaten = new Daten(data)
+            await newDaten.save();
+            res.end()
+        }
+    }
+    else {
+        let loginToggle = true
+        res.send({ loginToggle })
 
-    } else {
-        console.log("else")
-        const newDaten = new Daten(data)
-        await newDaten.save();
     }
 })
 
@@ -264,7 +272,7 @@ app.post("/Datenbank/newExercise", checkAuthenticated, async (req, res) => {
 
     const newExercise = new Exercise(data)
     await newExercise.save();
-
+    res.end()
 
 
 })
@@ -284,10 +292,11 @@ app.post("/Datenbank/newWeight", checkAuthenticated, async (req, res) => {
     if (check === true) {
 
         const replace = await Weight.replaceOne({ username: name, weightDate: today }, data)
-
+        res.end()
     } else {
         const newWeight = new Weight(data)
         await newWeight.save();
+        res.end()
     }
 })
 
@@ -366,10 +375,11 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 
 }))
 
-app.delete('/logout', (req, res) => {
-    req.logOut()
-    res.redirect('/login')
-})
+// app.delete('/logout', (req, res) => {
+//     req.logOut()
+//     res.redirect('/login')
+// })
+
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

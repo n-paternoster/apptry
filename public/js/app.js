@@ -173,8 +173,7 @@ function saveButtonListener(btn) {
             }
         })
             .then((response) => {
-                console.log(response.data.loginToggle)
-                console.log(response.status)
+                //Verhindert das Daten nicht gepeichert werden wenn die Session abgelaufen ist
                 if (!response.data.loginToggle) {
                     let inputWeight = evt.target.previousElementSibling
                     let inputRep = evt.target.previousElementSibling.previousElementSibling

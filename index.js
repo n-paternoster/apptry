@@ -230,6 +230,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
 
 app.post("/Datenbank/newData", async (req, res) => {
+    //Verhindert das Daten nicht gepeichert werden wenn die Session abgelaufen ist
     if (req.user != null) {
         let name = req.user.name
         let data = req.body

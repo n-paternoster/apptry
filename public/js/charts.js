@@ -36,14 +36,22 @@ async function createWeightGraph() {
     //Aufteilen der Daten in X und Y Array
     let weights = [];
     let dateLabel = [];
+
     for (obj of nestedMeanValue) {
         let weight = obj.values[0].weight
+
         let unsliceLabel = obj.key
         label = unsliceLabel.slice(0, 10);
 
         dateLabel.push(label)
         weights.push(weight)
     }
+    let maxValue = Math.max(...weights)
+    let minValue = Math.min(...weights)
+    console.log(weights)
+    console.log(minValue)
+    console.log(maxValue)
+
     //Create Chart
     const chart = document.getElementById("bodyChart")
     let linechart = new Chart(chart, {
@@ -52,7 +60,7 @@ async function createWeightGraph() {
             labels: dateLabel,
             datasets: [{
                 data: weights,
-                borderColor: "#FFFFFF",
+                borderColor: "#efeff1",
             }]
         },
         options: {
@@ -63,15 +71,26 @@ async function createWeightGraph() {
                 title: {
                     display: false,
                     text: "Bodyweight",
-                    color: "#FFFFFF"
+                    color: "#efeff1"
                 }
             },
             scales: {
                 x: {
+                    ticks: {
+                        color: "#efeff1",
+                    },
                     type: 'time',
                     time: {
                         unit: 'day'
                     }
+                },
+                y: {
+                    ticks: {
+                        color: "#efeff1",
+                    },
+                    max: maxValue + 1,
+                    min: minValue - 1,
+
                 }
             }
         }
@@ -135,9 +154,18 @@ function createGraph(dataName, Data) {
             },
             scales: {
                 x: {
+                    ticks: {
+                        color: "#efeff1",
+                    },
+
                     type: 'time',
                     time: {
                         unit: 'day'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: "#efeff1",
                     }
                 }
             }

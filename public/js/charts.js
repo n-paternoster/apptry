@@ -46,6 +46,7 @@ async function createWeightGraph() {
         dateLabel.push(label)
         weights.push(weight)
     }
+    //Buffer 
     let maxValue = Math.max(...weights)
     let minValue = Math.min(...weights)
     console.log(weights)
@@ -88,6 +89,7 @@ async function createWeightGraph() {
                     ticks: {
                         color: "#efeff1",
                     },
+                    //Buffer 
                     max: maxValue + 1,
                     min: minValue - 1,
 
@@ -98,7 +100,7 @@ async function createWeightGraph() {
 }
 
 //Auswählbarer Übungsgraph
-function createGraph(dataName, Data) {
+function createGraph(dataName, Data, selectedRange) {
 
 
     //Aufteilen aller Übung auf einzelne Tage
@@ -128,6 +130,17 @@ function createGraph(dataName, Data) {
         weights.push(weight)
     }
 
+    let max = dateLabel.reduce((prev, curr) => new Date(prev) > new Date(curr) ? prev : curr, "1970-01-01")
+    let min = dateLabel.reduce((prev, curr) => new Date(prev) < new Date(curr) ? prev : curr, new Date(Date.now()))
+    let dynMin
+    if (selectedRange != 0) {
+        dynMin = new Date(new Date(max).getTime() - selectedRange)
+    }
+    else {
+        dynMin = min
+    }
+    console.log(dynMin)
+    console.log(min)
     const chart = document.getElementById("myChart")
     let linechart = new Chart(chart, {
         type: "line",
@@ -154,6 +167,9 @@ function createGraph(dataName, Data) {
             },
             scales: {
                 x: {
+
+                    min: dynMin,
+                    max: max,
                     ticks: {
                         color: "#efeff1",
                     },
@@ -194,6 +210,7 @@ for (let obj of selectExercise) {
 
 
         let newDiv = document.createElement("div");
+        newDiv.setAttribute("class", "nameDiv")
         let inputStyle = document.createElement("select");
         let addExerciseButton = evt.target;
         // addExerciseButton.disabled = true;
@@ -256,21 +273,79 @@ for (let obj of selectExercise) {
                 img.remove()
                 //GraphElement
                 let div = document.createElement("div")
+                let rangeSelect = document.createElement("select")
+                rangeSelect.setAttribute("id", "rangeSelector")
+                let option1m = document.createElement("option")
+
+                option1m.innerText = "1 Month"
+                option1m.value = 1 * 30 * 24 * 60 * 60 * 1000
+                let option3m = document.createElement("option")
+                option3m.innerText = "3 Month"
+                option3m.value = 3 * 30 * 24 * 60 * 60 * 1000
+                let option6m = document.createElement("option")
+                option6m.innerText = "6 Month"
+                option6m.value = 6 * 30 * 24 * 60 * 60 * 1000
+                let option12m = document.createElement("option")
+                option12m.innerText = "1 Year"
+                option12m.value = 12 * 30 * 24 * 60 * 60 * 1000
+                let optionAll = document.createElement("option")
+                optionAll.innerText = "All"
+                optionAll.value = 0
+                rangeSelect.appendChild(optionAll)
+                rangeSelect.appendChild(option1m)
+                rangeSelect.appendChild(option3m)
+                rangeSelect.appendChild(option6m)
+                rangeSelect.appendChild(option12m)
+
+
                 div.setAttribute("class", "container")
                 let canvas = document.createElement("canvas")
                 canvas.setAttribute("id", "myChart")
+
+                div.appendChild(rangeSelect)
                 div.appendChild(canvas)
                 evt.target.parentElement.parentElement.insertBefore(div, evt.target.parentElement.nextElementSibling)
-                createGraph(selectName, res.data);
+
+
+                let range = []
+                const selectRange = document.getElementById("rangeSelector")
+                selectRange.addEventListener("change", (evt) => {
+
+                    let selectedRange = evt.target.options[evt.target.selectedIndex].value
+                    range = selectedRange
+                    let canvas = evt.target.nextElementSibling
+                    if (canvas) {
+                        canvas.remove()
+                    }
+
+                    let newCanvas = document.createElement("canvas")
+                    newCanvas.setAttribute("id", "myChart")
+                    evt.target.parentElement.appendChild(newCanvas)
+
+                    createGraph(selectName, res.data, range);
+                })
+
+
+
+
+
+
+
+
+
+
+                createGraph(selectName, res.data, range);
 
 
 
             })
         }
         //Ersetzen der vorher ausgewählten Übungen
-        let oldName = evt.target.nextElementSibling.nextElementSibling;
-        if (oldName !== null) { oldName.remove(); }
+
+        let oldName = document.querySelectorAll(".nameDiv")
+        if (oldName[1] !== null) { oldName[1].remove(); }
 
 
     })
 }
+

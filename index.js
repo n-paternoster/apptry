@@ -69,6 +69,18 @@ const users = [{
     email: 'sandner340@googlemail.com',
     password: process.env.hashedTobi
 
+},
+{
+    id: '1631234651351',
+    name: 'Matte',
+    email: 'matthias_strohmaier@web.de',
+    password: process.env.hashedMatte
+},
+{
+    id: '1631234651351',
+    name: 'Steff',
+    email: 'kronauer.stefan@gmx.de',
+    password: process.env.hashedSteff
 }
 ]
 
@@ -231,7 +243,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
 app.post("/Datenbank/newData", async (req, res) => {
     //Verhindert das Daten nicht gepeichert werden wenn die Session abgelaufen ist
-    if (req.user != null) {
+    if (req.isAuthenticated()) {
         let name = req.user.name
         let data = req.body
         data["username"] = name;

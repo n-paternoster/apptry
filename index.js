@@ -13,6 +13,7 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const MongoStore = require('connect-mongo');
 
+
 if (process.env.NODE_ENV === 'production') {
     //do production stuff
 
@@ -33,11 +34,7 @@ initializePassport(
 )
 
 
-
-
-
-
-
+//.NODE_ENV nicht vergessen!!!!! (production Server)
 const users = [{
     id: '1635875169289',
     name: 'Emold',
@@ -94,6 +91,8 @@ const Daten = require("./models/daten");
 const Weight = require("./models/weight");
 const store = MongoStore.create({
     mongoUrl: process.env.mongoLink,
+    autoRemove: 'interval',
+    autoRemoveInterval: 60 * 24, // In minutes. Default
     touchAfter: 24 * 60 * 60,
     crypto: {
         secret: 'squirrel'
@@ -180,7 +179,6 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
         // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
         const lastDay = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
 
-
         if (typeof lastDay !== 'undefined' && lastDay.length > 0) {
             // the array is defined and has at least one element
 
@@ -190,9 +188,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
             let Day = lastDay[0].exerciseDate;
             let controleDay = Day.toISOString().slice(0, 10);
 
-
             if (controleDay == eDate) {
-
                 nameArray.push(name)
                 const daybefore = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $ne: Day }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
                 console.log(daybefore)
@@ -200,22 +196,12 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
                     let beforeday = daybefore[0].exerciseDate;
                     const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: beforeday }, 'exerciseWeight exerciseRep exerciseSet')
                     data.push(pDaten)
-
-
                 }
                 else {
                     data.push(0)
                 }
-
-
-
                 const todayDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
                 todaysdata.push(todayDaten);
-
-
-
-
-
             } else {
 
                 const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
@@ -224,8 +210,6 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
                 nameArray.push(name)
                 todaysdata.push(0);
             }
-
-
         } else {
             nameArray.push(name)
             data.push(0)
@@ -247,18 +231,18 @@ app.post("/Datenbank/newData", async (req, res) => {
         let name = req.user.name
         let data = req.body
         data["username"] = name;
-        console.log(data)
+
 
 
         const check = await Daten.exists({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false })
-        console.log(check)
+
         //Doublication check
         if (check === true) {
 
             const replace = await Daten.replaceOne({ username: name, exerciseName: req.body.exerciseName, exerciseDate: req.body.exerciseDate, exerciseSet: req.body.exerciseSet, basicExercise: false }, data)
             res.end()
         } else {
-            console.log("else")
+
             const newDaten = new Daten(data)
             await newDaten.save();
             res.end()
@@ -363,6 +347,44 @@ app.get("/Datenbank/getWeight", checkAuthenticated, async (req, res) => {
 
 
     res.send({ selectedWeight })
+})
+
+
+app.get("/Datenbank/getTime", checkAuthenticated, async (req, res) => {
+
+    let name = req.user.name
+    let today = new Date();
+    let eDate = today.toISOString().slice(0, 10);
+    //Letzte Übung ermitteln
+    const lastDay = await Daten.find({ username: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
+    console.log(lastDay)
+    let timeDiff = []
+    let latestValues = []
+    if (typeof lastDay !== 'undefined' && lastDay.length > 0) {
+
+        let Day = lastDay[0].exerciseDate;
+        console.log(Day)
+        let controleDay = Day.toISOString().slice(0, 10);
+        console.log(controleDay)
+        //Zeit der letzten Übung
+        const latestDuration = await Daten.find({ username: name, basicExercise: false, exerciseDate: controleDay }, "exerciseTime").sort({ exerciseDate: -1 })
+        console.log(latestDuration)
+        for (arr of latestDuration) {
+            latestValues.push(arr.exerciseTime)
+        }
+        console.log(latestValues)
+        //Runden&Subtrahieren von 1. und letzen Wert (vorher sortiert durch Mongoose)
+        timeDiff = Math.round(Math.abs(new Date(latestValues[latestValues.length - 1]) - new Date(latestValues[0])) / (1000 * 60))
+        console.log(timeDiff)
+    } else {
+        timeDiff = 0
+    }
+
+    const allData = await Daten.find({ username: name, exerciseTime: { $exists: true }, basicExercise: false }, 'exerciseTime exerciseDate').sort({ exerciseDate: -1 })
+
+
+
+    res.send({ timeDiff, allData })
 })
 
 app.get('/Exercises', checkAuthenticated, (req, res) => {

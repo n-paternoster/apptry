@@ -161,6 +161,7 @@ function saveButtonListener(btn) {
             exerciseSet: setNum,
             exerciseDate: eDate,
             basicExercise: false,
+            exerciseTime: today
 
         }
         let res = await axios({

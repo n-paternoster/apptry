@@ -15,7 +15,8 @@ const DatenSchema = new mongoose.Schema({
 
     username: String,
 
-    uKey: { type: Number, unique: true }
+    exerciseTime: Date,
+
 })
 
 const Daten = mongoose.model("Daten", DatenSchema);

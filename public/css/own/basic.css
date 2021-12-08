@@ -84,10 +84,6 @@ input[type="number"]:disabled, textarea:disabled{
     border-color: #4C4C4F !important;
 
 }
-::placeholder { 
-    color:    #efeff1 !important;
-    font-style: italic;
- }
 
 .buttonAll{
     background-color: #18181B;
@@ -149,6 +145,7 @@ td{
 .centering{
     text-align: center;
     background-color: #1F1F23 !important;
+    color: #efeff1;
     
 }
 
@@ -165,12 +162,18 @@ hr.rounded {
 }
 
 select.form-control{
-color: #EFEFF1;;
+color: #EFEFF1;
 width: 90%;
 margin-left: 5% !important;
 margin-right: 5% !important;
 text-align: center;
 background-color:#2b2b30 ;
+
+}
+select.smallSelect{
+
+    color: #EFEFF1;
+    background-color:#2b2b30 ;
 
 }
 
@@ -224,7 +227,7 @@ select.form-select{
     margin-left: 5% !important;
     margin-right: 5% !important;
     text-align: center;
-    background-color:#2b2b30 ;
+    background-color:#2b2b30 !important;
     margin-bottom: 2%;
     
 }

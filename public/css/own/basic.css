@@ -128,18 +128,19 @@ input[type="number"]:disabled, textarea:disabled{
     padding-left: 10px !important;
     padding-right: 10px !important;
     font-weight: bold;
-    border: 3px solid rgb(0, 0, 0);
+    border: 3px solid #0c0c0e;
 }
 
 
 table{
+    background-color: #2b2b30;
     table-layout: auto;
-    width: 20%;    
-    border: 3px solid rgb(0, 0, 0);
+    width: 45%;    
+    border: 3px solid #0c0c0e;
 }
 
 td{
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid #4C4C4F;
 }
 
 .centering{
@@ -153,11 +154,12 @@ hr.rounded {
   margin-left: 5%;
   width: 90%;
   border-top: 8px solid #bbb;
-  border-radius: 5px;}
+  border-radius: 5px;
+}
 
 
   
-  .TextStyle{
+.TextStyle{
     color: #EFEFF1;
 }
 
@@ -236,6 +238,11 @@ select.form-select{
 
         color:#EFEFF1; 
         font-size: 1.5rem;
+}
+
+input.form-control{
+
+    margin-top: 1%;
 }
 
 input[type="number"], textarea {

@@ -123,14 +123,6 @@ mongoose.connect(process.env.mongoLink)
     })
 
 
-
-
-
-
-
-
-
-
 app.use(express.static("public"));
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -174,19 +166,27 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     let nameArray = [];
     let data = [];
     let todaysdata = [];
-
+    let allDates = []
     for (let name of allNames) {
         // Sucht nach den letzten Tag der Übung um damit in pExercises die letzten Übungswerte darstellen zu können
         const lastDay = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
-
+        // the array is defined and has at least one element
         if (typeof lastDay !== 'undefined' && lastDay.length > 0) {
-            // the array is defined and has at least one element
+
 
             let today = new Date();
             let eDate = today.toISOString().slice(0, 10);
 
             let Day = lastDay[0].exerciseDate;
             let controleDay = Day.toISOString().slice(0, 10);
+
+            let dateFormat = `${Day.getDay() + 1}.${Day.getMonth() + 1}.${Day.getYear() + 1900}`
+
+
+
+            allDates.push(dateFormat)
+
+            //Differnziert zwischen letzt Übung und heute Übungung
 
             if (controleDay == eDate) {
                 nameArray.push(name)
@@ -218,7 +218,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
     }
 
-    res.render("pExercises.ejs", { nameArray, data, todaysdata });
+    res.render("pExercises.ejs", { nameArray, data, todaysdata, allDates });
 
 })
 

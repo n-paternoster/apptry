@@ -139,7 +139,15 @@ for (let obj of addExercises) {
     })
 }
 
-// POST Speichern der Uebungssaetze in die Datenbank
+
+
+
+//POST Speichern der Uebungssaetze in die Datenbank
+const saveSetButtons = document.querySelectorAll('.saveSetButton');
+for (let obj of saveSetButtons) {
+    saveButtonListener(obj)
+
+}
 function saveButtonListener(btn) {
     btn.addEventListener('click', async (evt) => {
 
@@ -219,13 +227,6 @@ function saveButtonListener(btn) {
     })
 
 
-
-}
-
-//POST Speichern der Uebungssaetze in die Datenbank
-const saveSetButtons = document.querySelectorAll('.saveSetButton');
-for (let obj of saveSetButtons) {
-    saveButtonListener(obj)
 
 }
 

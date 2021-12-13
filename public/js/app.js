@@ -154,7 +154,7 @@ function saveButtonListener(btn) {
         let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].innerText // exerciseName
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
-        let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, ""))
+        let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''))
         let setNum = setCount.children.length;
 
         let today = new Date();
@@ -192,7 +192,7 @@ function saveButtonListener(btn) {
 
 
 
-                    const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, ""));
+                    const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''));
 
                     const tableRow = document.createElement("tr")
                     const tableDataSet = document.createElement("td")

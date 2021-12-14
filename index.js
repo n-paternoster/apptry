@@ -180,18 +180,18 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
             let Day = lastDay[0].exerciseDate;
             let controleDay = Day.toISOString().slice(0, 10);
 
-            let dateFormat = `${Day.getDay() + 1}.${Day.getMonth() + 1}.${Day.getYear() + 1900}`
+            let dateFormat = `${Day.getDate()}.${Day.getMonth() + 1}.${Day.getYear() + 1900}`
 
 
 
             allDates.push(dateFormat)
 
-            //Differnziert zwischen letzt Übung und heute Übungung
+            //Differnziert zwischen letzte Übung und heute Übungung
 
             if (controleDay == eDate) {
                 nameArray.push(name)
                 const daybefore = await Daten.find({ username: Uname, exerciseName: name, exerciseDate: { $ne: Day }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
-                console.log(daybefore)
+
                 if (typeof daybefore !== '0' && daybefore.length > 0) {
                     let beforeday = daybefore[0].exerciseDate;
                     const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: beforeday }, 'exerciseWeight exerciseRep exerciseSet')
@@ -214,6 +214,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
             nameArray.push(name)
             data.push(0)
             todaysdata.push(0);
+            allDates.push("-")
         }
 
     }

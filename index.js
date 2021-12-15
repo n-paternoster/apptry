@@ -91,6 +91,7 @@ const Daten = require("./models/daten");
 const Weight = require("./models/weight");
 const store = MongoStore.create({
     mongoUrl: process.env.mongoLink,
+    saveUninitialized: false,
     autoRemove: 'interval',
     autoRemoveInterval: 60 * 24, // In minutes. Default
     touchAfter: 24 * 60 * 60,

@@ -1,7 +1,6 @@
 
 // const allBodyparts = ["Biceps", "Triceps", "Legs", "Chest", "Abdominal", "Shoulders", "Lower Back", "Upper Back"]
 
-
 //neue Übung in pickable Exercise machen
 const addExercises = document.querySelectorAll('.addExercise');
 for (let obj of addExercises) {
@@ -138,9 +137,6 @@ for (let obj of addExercises) {
         })
     })
 }
-
-
-
 
 //POST Speichern der Uebungssaetze in die Datenbank
 const saveSetButtons = document.querySelectorAll('.saveSetButton');

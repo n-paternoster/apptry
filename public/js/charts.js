@@ -507,6 +507,7 @@ for (let obj of selectExercise) {
                     evt.target.parentElement.parentElement.insertBefore(div, evt.target.parentElement.nextElementSibling)
 
 
+
                     let range = []
                     const selectRange = document.getElementById("rangeSelector")
                     selectRange.addEventListener("change", (evt) => {
@@ -525,6 +526,7 @@ for (let obj of selectExercise) {
                         createGraph(selectName, res.data, range);
                     })
                     createGraph(selectName, res.data, range);
+                    canvas.scrollIntoView()
                 }
             })
 
@@ -540,3 +542,4 @@ for (let obj of selectExercise) {
     })
 }
 
+const date = new Date();

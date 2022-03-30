@@ -35,6 +35,14 @@ h2 {
     font-weight: bold ;
     
 }
+.p_exName{
+    font-weight: bold ;
+    
+}
+.p_exType{
+    
+    font-size: small !important;
+}
 .accordion-button{
     background-color: #1F1F23 !important;
     color: #EFEFF1 !important;

@@ -157,13 +157,14 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
     const search = Object.values(req.query);
     let allNames = [];
     let Uname = req.user.name
+    let allTypes = [];
     for (s of search) {
-        const names = await Exercise.find({ username: Uname, exerciseType: s, basicExercise: true }, "exerciseName")
+        const names = await Exercise.find({ username: Uname, exerciseType: s, basicExercise: true }, "exerciseName exerciseType")
         for (i of names) {
             allNames.push(i.exerciseName);
+            allTypes.push(s)
         }
     }
-
     let nameArray = [];
     let data = [];
     let todaysdata = [];
@@ -185,7 +186,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
 
 
-            allDates.push(dateFormat)
+
 
             //Differnziert zwischen letzte Übung und heute Übungung
 
@@ -195,18 +196,21 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
                 if (typeof daybefore !== '0' && daybefore.length > 0) {
                     let beforeday = daybefore[0].exerciseDate;
+                    let oldDate = `${beforeday.getDate()}.${beforeday.getMonth() + 1}.${beforeday.getYear() + 1900}`
                     const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: beforeday }, 'exerciseWeight exerciseRep exerciseSet')
                     data.push(pDaten)
+                    allDates.push(oldDate)
                 }
                 else {
                     data.push(0)
                 }
+                //Daten rechte Tabelle
                 const todayDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
                 todaysdata.push(todayDaten);
             } else {
 
                 const pDaten = await Daten.find({ username: Uname, exerciseName: name, basicExercise: false, exerciseDate: Day }, 'exerciseWeight exerciseRep exerciseSet')
-
+                allDates.push(dateFormat)
                 data.push(pDaten)
                 nameArray.push(name)
                 todaysdata.push(0);
@@ -220,7 +224,7 @@ app.get("/Datenbank", checkAuthenticated, async (req, res) => {
 
     }
 
-    res.render("pExercises.ejs", { nameArray, data, todaysdata, allDates });
+    res.render("pExercises.ejs", { nameArray, data, todaysdata, allDates, allTypes });
 
 })
 

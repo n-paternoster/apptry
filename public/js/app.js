@@ -149,14 +149,19 @@ for (let obj of saveSetButtons) {
 }
 function saveButtonListener(btn) {
     btn.addEventListener('click', async (evt) => {
+        //Button disable und Farbe verändern
 
-
-        let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].innerText // exerciseName
+        evt.target.disable = true;
+        evt.target.style.color = "grey";
+        evt.target.style.borderColor = "grey";
+        let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].innerText // exerciseName
+        console.log(eName)
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
+        console.log(eWeight)
         let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''))
         let setNum = setCount.children.length;
-        console.log(eWeight)
+
         if (typeof eWeight !== 'undefined' && eWeight.length > 0 && typeof eRep !== 'undefined' && eRep.length > 0) {
 
             let today = new Date();
@@ -182,6 +187,7 @@ function saveButtonListener(btn) {
                     'Content-Type': 'application/json'
 
                 }
+
             })
                 .then((response) => {
                     //Verhindert das Daten nicht gepeichert werden wenn die Session abgelaufen ist
@@ -210,9 +216,15 @@ function saveButtonListener(btn) {
                         tableRow.appendChild(tableDataRep)
 
                         table.appendChild(tableRow)
+                        evt.target.disable = false;
+                        evt.target.style.color = "#EFEFF1";
+                        evt.target.style.borderColor = "#EFEFF1";
                     }
                     else {
                         location.reload();
+                        evt.target.disable = false;
+                        evt.target.style.color = "#EFEFF1";
+                        evt.target.style.borderColor = "#EFEFF1";
                     }
                 }, (error) => {
 

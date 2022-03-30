@@ -14,41 +14,50 @@
 <body>
     <h1>Login</h1>
     <% if (messages.error) { %>
-        <%= messages.error %>
-            <% } %>
-                <div class="content">
-                    < <form action="/login" method="POST">
-
-
-
-                        <div class="ingroup">
-                            <div class="icon">
-                                <img src="pics/user.png" alt="">
-                            </div>
-                            <div class="input">
-                                <input type="email" id="email" name="email" required placeholder="Email">
-                            </div>
+        <div class="centering" color="white">
+            <%= messages.error %>
+        </div>
+        <% } %>
+            <div class="content">
+                <form action="/login" id="loginform" method="POST">
+                    <div class="ingroup">
+                        <div class="icon">
+                            <img src="pics/user.png" alt="">
                         </div>
-
-
-                        <div class="ingroup">
-                            <div class="icon">
-                                <img src="pics/padlock.png">
-                            </div>
-                            <div class=" input">
-                                <input type="password" id="password" name="password" required placeholder="Password">
-                            </div>
+                        <div class="input">
+                            <input type="email" id="email" name="email" required placeholder="Email">
                         </div>
-                        <div class="centering">
-                            <button class="signin buttonAll" type="submit">Login</button>
+                    </div>
+
+                    <div class="ingroup">
+                        <div class="icon">
+                            <img src="pics/padlock.png">
                         </div>
-                        </form>
-                </div>
+                        <div class=" input">
+                            <input type="password" id="password" name="password" required placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="centering">
+                        <button class="signin buttonAll" id="signinbutton" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>
 
-                <script>
+            <script>
+                const submitbutton = document.querySelector("#signinbutton")
+                submitbutton.addEventListener("click", (evt) => {
+                    document.getElementById("loginform").submit();
 
-                    sessionStorage.clear()
-                </script>
+                    const img = document.createElement("img")
+                    img.src = 'pics/muskel.gif'
+                    img.style.width = '40%'
+                    evt.target.parentElement.insertBefore(img, evt.target)
+                    evt.target.remove()
+                })
+
+
+                sessionStorage.clear()
+            </script>
 
 
 </body>

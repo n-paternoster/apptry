@@ -141,84 +141,90 @@ for (let obj of addExercises) {
 //POST Speichern der Uebungssaetze in die Datenbank
 const saveSetButtons = document.querySelectorAll('.saveSetButton');
 for (let obj of saveSetButtons) {
+
+
+
     saveButtonListener(obj)
 
 }
 function saveButtonListener(btn) {
     btn.addEventListener('click', async (evt) => {
 
+
         let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].innerText // exerciseName
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
         let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''))
         let setNum = setCount.children.length;
+        console.log(eWeight)
+        if (typeof eWeight !== 'undefined' && eWeight.length > 0 && typeof eRep !== 'undefined' && eRep.length > 0) {
 
-        let today = new Date();
-        let eDate = today.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
+            let today = new Date();
+            let eDate = today.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
 
 
-        let dataObject = {
+            let dataObject = {
 
-            exerciseName: eName,
-            exerciseWeight: eWeight,
-            exerciseRep: eRep,
-            exerciseSet: setNum,
-            exerciseDate: eDate,
-            basicExercise: false,
-            exerciseTime: today
-
-        }
-        let res = await axios({
-            method: 'post',
-            url: '/Datenbank/newData',
-            data: dataObject,
-            headers: {
-                'Content-Type': 'application/json'
+                exerciseName: eName,
+                exerciseWeight: eWeight,
+                exerciseRep: eRep,
+                exerciseSet: setNum,
+                exerciseDate: eDate,
+                basicExercise: false,
+                exerciseTime: today
 
             }
-        })
-            .then((response) => {
-                //Verhindert das Daten nicht gepeichert werden wenn die Session abgelaufen ist
-                if (!response.data.loginToggle) {
-                    let inputWeight = evt.target.previousElementSibling
-                    let inputRep = evt.target.previousElementSibling.previousElementSibling
+            let res = await axios({
+                method: 'post',
+                url: '/Datenbank/newData',
+                data: dataObject,
+                headers: {
+                    'Content-Type': 'application/json'
 
-                    inputWeight.value = null;
-                    inputRep.value = null;
-
-
-
-                    const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''));
-
-                    const tableRow = document.createElement("tr")
-                    const tableDataSet = document.createElement("td")
-                    const tableDataWeight = document.createElement("td")
-                    const tableDataRep = document.createElement("td")
-
-                    tableDataWeight.innerText = `${eWeight} kg`;
-                    tableDataSet.innerText = `${setNum}.`;
-                    tableDataRep.innerText = `x ${eRep}`;
-
-                    tableRow.appendChild(tableDataSet)
-                    tableRow.appendChild(tableDataWeight)
-                    tableRow.appendChild(tableDataRep)
-
-                    table.appendChild(tableRow)
                 }
-                else {
-                    location.reload();
-                }
-            }, (error) => {
+            })
+                .then((response) => {
+                    //Verhindert das Daten nicht gepeichert werden wenn die Session abgelaufen ist
+                    if (!response.data.loginToggle) {
+                        let inputWeight = evt.target.previousElementSibling
+                        let inputRep = evt.target.previousElementSibling.previousElementSibling
 
-                console.log(error);
-            });
-
-
-
-
+                        inputWeight.value = null;
+                        inputRep.value = null;
 
 
 
+                        const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''));
+
+                        const tableRow = document.createElement("tr")
+                        const tableDataSet = document.createElement("td")
+                        const tableDataWeight = document.createElement("td")
+                        const tableDataRep = document.createElement("td")
+
+                        tableDataWeight.innerText = `${eWeight} kg`;
+                        tableDataSet.innerText = `${setNum}.`;
+                        tableDataRep.innerText = `x ${eRep}`;
+
+                        tableRow.appendChild(tableDataSet)
+                        tableRow.appendChild(tableDataWeight)
+                        tableRow.appendChild(tableDataRep)
+
+                        table.appendChild(tableRow)
+                    }
+                    else {
+                        location.reload();
+                    }
+                }, (error) => {
+
+                    console.log(error);
+                });
+
+
+
+
+
+
+        }
 
     })
 

@@ -15,7 +15,7 @@ const MongoStore = require('connect-mongo');
 
 
 if (process.env.NODE_ENV === 'production') {
-    //do production stuff
+    //unterschied Server zu PC in NODE_ENV
 
     app.use(function (req, res, next) {
         if (!req.secure) {

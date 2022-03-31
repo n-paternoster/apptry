@@ -154,14 +154,14 @@ function saveButtonListener(btn) {
         evt.target.disable = true;
         evt.target.style.color = "grey";
         evt.target.style.borderColor = "grey";
-        let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].innerText // exerciseName
-        console.log(eName)
+        let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[0].innerText // exerciseName
+
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
-        console.log(eWeight)
+
         let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''))
         let setNum = setCount.children.length;
-
+        //Leere inputs verhidnern
         if (typeof eWeight !== 'undefined' && eWeight.length > 0 && typeof eRep !== 'undefined' && eRep.length > 0) {
 
             let today = new Date();
@@ -201,7 +201,10 @@ function saveButtonListener(btn) {
 
 
                         const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''));
-
+                        //Set Counter in Overview
+                        let counter = table.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[1]
+                        counter.innerText = `${setNum} / 3`;
+                        //Todays Table
                         const tableRow = document.createElement("tr")
                         const tableDataSet = document.createElement("td")
                         const tableDataWeight = document.createElement("td")
@@ -231,11 +234,11 @@ function saveButtonListener(btn) {
                     console.log(error);
                 });
 
-
-
-
-
-
+        }
+        else {
+            evt.target.disable = false;
+            evt.target.style.color = "#EFEFF1";
+            evt.target.style.borderColor = "#EFEFF1";
         }
 
     })

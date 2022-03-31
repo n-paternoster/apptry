@@ -28,7 +28,11 @@ h2 {
    
 
 }
-
+.right_align{
+    display: flex;
+  align-items: right;
+  justify-content: right;
+}
 .accordion-button:not(.collapsed){
 
     background-color:#2b2b30 !important;

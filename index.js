@@ -380,7 +380,7 @@ app.get("/Datenbank/getTime", checkAuthenticated, async (req, res) => {
 
         //Runden&Subtrahieren von 1. und letzen Wert (vorher sortiert durch Mongoose)
         timeDiff = Math.round(Math.abs(new Date(latestValues[latestValues.length - 1]) - new Date(latestValues[0])) / (1000 * 60))
-        c
+
     } else {
         timeDiff = 0
     }

@@ -10,3 +10,15 @@ function init() {
             })
     }
 }
+
+let actualDateLong = new Date();
+let acDate = actualDateLong.toISOString().slice(0, 10);
+
+
+let storedDate = window.localStorage.getItem("dateDay")
+
+if (storedDate !== acDate) {
+    window.localStorage.clear()
+}
+
+

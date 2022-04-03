@@ -54,7 +54,7 @@ h2 {
 }
 
 .p_exType {
-
+    font-weight: normal !important;
     font-size: small !important;
 }
 

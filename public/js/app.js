@@ -154,8 +154,8 @@ function saveButtonListener(btn) {
         evt.target.disable = true;
         evt.target.style.color = "grey";
         evt.target.style.borderColor = "grey";
-        let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[0].innerText // exerciseName
-
+        let eName = evt.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[0].children[0].children[0].innerText // exerciseName
+        console.log(eName)
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
 
@@ -202,7 +202,7 @@ function saveButtonListener(btn) {
 
                         const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''));
                         //Set Counter in Overview
-                        let counter = table.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[1]
+                        let counter = table.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[0].children[1]
                         counter.innerText = `${setNum} / 3`;
                         //Todays Table
                         const tableRow = document.createElement("tr")

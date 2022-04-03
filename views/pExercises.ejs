@@ -30,28 +30,35 @@
                     data-bs-target="#flush-collapseOne<%=i %>" aria-expanded="false"
                     aria-controls="flush-collapseOne<%=i %>">
 
-                    <div class="p_exName">
-                        <span>
-                            <%= nameArray[i] %>
-                        </span>
-                        <span class="right_align">
-                            <% if (typeof todaysdata[i] !=='0' && todaysdata[i].length>0){%>
-                                <%= todaysdata[i].length %>
-                                    <%}else{%>
-                                        -
 
-                                        <%}%>/
-                                            <% if (typeof data[i] !=='0' && data[i].length>3){%>
-                                                <%= data[i].length %>
-                                                    <%} else {%>
-                                                        3
-                                                        <%}%>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div style="padding-left: 16.66%;" class="col-10 p_exName ">
+                                <div class="p_exName">
+                                    <%= nameArray[i] %>
+                                </div>
 
-                        </span>
+                                <div class="p_exType">
+                                    <%= allTypes[i] %>
+                                </div>
+                            </div>
+                            <div class=" align-self-center right_align col-2">
+                                <% if (typeof todaysdata[i] !=='0' && todaysdata[i].length>0){%>
+                                    <%= todaysdata[i].length %>
+                                        <%}else{%>
+                                            -
+
+                                            <%}%>/
+                                                <% if (typeof data[i] !=='0' && data[i].length>3){%>
+                                                    <%= data[i].length %>
+                                                        <%} else {%>
+                                                            3
+                                                            <%}%>
+
+                            </div>
+                        </div>
                     </div>
-                    <div class="p_exType">
-                        <%= allTypes[i] %>
-                    </div>
+
 
                 </button>
 

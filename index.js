@@ -335,8 +335,7 @@ app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
         username: name
 
     }, "exerciseDate exerciseWeight exerciseRep exerciseSet")
-    console.log(values)
-    console.log(selectedData)
+
     res.send({ selectedData })
 })
 
@@ -363,25 +362,25 @@ app.get("/Datenbank/getTime", checkAuthenticated, async (req, res) => {
     let eDate = today.toISOString().slice(0, 10);
     //Letzte Übung ermitteln
     const lastDay = await Daten.find({ username: name, exerciseDate: { $exists: true }, basicExercise: false }, 'exerciseDate').sort({ $natural: -1 }).limit(1);
-    console.log(lastDay)
+
     let timeDiff = []
     let latestValues = []
     if (typeof lastDay !== 'undefined' && lastDay.length > 0) {
 
         let Day = lastDay[0].exerciseDate;
-        console.log(Day)
+
         let controleDay = Day.toISOString().slice(0, 10);
-        console.log(controleDay)
+
         //Zeit der letzten Übung
         const latestDuration = await Daten.find({ username: name, basicExercise: false, exerciseDate: controleDay }, "exerciseTime").sort({ exerciseDate: -1 })
-        console.log(latestDuration)
+
         for (arr of latestDuration) {
             latestValues.push(arr.exerciseTime)
         }
-        console.log(latestValues)
+
         //Runden&Subtrahieren von 1. und letzen Wert (vorher sortiert durch Mongoose)
         timeDiff = Math.round(Math.abs(new Date(latestValues[latestValues.length - 1]) - new Date(latestValues[0])) / (1000 * 60))
-        console.log(timeDiff)
+        c
     } else {
         timeDiff = 0
     }

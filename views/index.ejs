@@ -10,13 +10,22 @@
 
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/own/basic.css">
+    <link rel="stylesheet" href="/css/own/index.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
 
 <body>
     <h1>Padappter</h1>
+
+
+    <div class="card">
+        <a id="startWorkout" href="/Exercises" class="main-link">Start Workout !</a>
+    </div>
+
+    <div class="card">
+        <a href="/Chart" class="main-link">Workout Analysis</a>
+    </div>
     <div class="weightAccordion">
 
 
@@ -51,19 +60,36 @@
 
 
     </div>
+    <div class="overviewAccordion">
+        <div class="accordion-item" id="weekOverview">
 
-    <div class="card">
-        <a href="/Exercises" class="main-link">Start Workout !</a>
+            <div class=" d-flex flex-row accordion-header " id=" flush-headingTwo">
+
+                <button class="Touchevent accordion-button collapsed accordionButton" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                    aria-controls="flush-collapseTwo">
+                    Show last training sessions
+                </button>
+
+
+            </div>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+
+
+
+                    Hier könnte ihre Tabelle stehen
+
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="card">
-        <a href="/Chart" class="main-link">Workout Analysis</a>
-    </div>
-
 
 
     <script src="/js/script.js"></script>
     <script src="/js/handler.js"></script>
+
 
 
 

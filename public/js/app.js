@@ -1,6 +1,13 @@
 
 // const allBodyparts = ["Biceps", "Triceps", "Legs", "Chest", "Abdominal", "Shoulders", "Lower Back", "Upper Back"]
+const addChange = document.querySelectorAll('.changeType');
+for (let obj of addChange) {
 
+    obj.addEventListener('click', (evt) => {
+        window.location.replace("/Exercises")
+
+    })
+}
 //neue Übung in pickable Exercise machen
 const addExercises = document.querySelectorAll('.addExercise');
 for (let obj of addExercises) {

@@ -10,4 +10,3 @@ window.localStorage.setItem("query", query)
 
 
 
-

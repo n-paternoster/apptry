@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     if (storedDate !== acDate) {
         window.localStorage.clear()
-        console.log("if")
+
     } else {
 
         let startAnker = document.getElementById("startWorkout")

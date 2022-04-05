@@ -324,6 +324,33 @@ app.get("/Datenbank/selectExercise", checkAuthenticated, async (req, res) => {
 
 
 })
+app.get("/Datenbank/getOverview", checkAuthenticated, async (req, res) => {
+
+    let name = req.user.name
+    let actualDateLong = new Date();
+    let myDate = new Date();
+
+    let dateOffset = (24 * 60 * 60 * 1000) * 8; //5 days
+
+    actualDateLong.setTime(actualDateLong.getTime() - dateOffset);
+    let acDate = myDate.toISOString().slice(0, 10);
+    let prevDate = actualDateLong.toISOString().slice(0, 10);
+
+
+
+    let overviewExercises = await Daten.find({
+        exerciseDate:
+        {
+            $gte: prevDate,
+            $lt: acDate
+        },
+        basicExercise: false,
+        username: name
+    })
+
+    res.send({ overviewExercises })
+
+})
 app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {
     const values = Object.values(req.query);
     let name = req.user.name

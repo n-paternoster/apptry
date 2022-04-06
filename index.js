@@ -328,27 +328,71 @@ app.get("/Datenbank/getOverview", checkAuthenticated, async (req, res) => {
 
     let name = req.user.name
     let actualDateLong = new Date();
-    let myDate = new Date();
+    let actualMyDate = new Date();
 
-    let dateOffset = (24 * 60 * 60 * 1000) * 8; //5 days
+    let dateOffset = (24 * 60 * 60 * 1000) * 8; //8 days
+    let dateOnset = (24 * 60 * 60 * 1000) * 1;
 
     actualDateLong.setTime(actualDateLong.getTime() - dateOffset);
-    let acDate = myDate.toISOString().slice(0, 10);
+    actualMyDate.setTime(actualMyDate.getTime() + dateOnset);
+    let acDate = actualMyDate.toISOString().slice(0, 10);
     let prevDate = actualDateLong.toISOString().slice(0, 10);
+    console.log(acDate)
+    console.log(prevDate)
+    let everyData = []
+    let disValue = await Daten.aggregate
+        ([
+            {
+                $match: {
+                    basicExercise: false,
+                    username: name,
+                    exerciseDate:
+                    {
+                        $gte: new Date(prevDate),
+                        $lt: new Date(acDate)
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: "$exerciseDate",
+                    exercises: { $addToSet: "$exerciseName" }
+                }
+
+            }, { $sort: { _id: -1 } },
+        ]);
+
+    for (el of disValue) {
+        let date = el._id
+        let dateshort = date.toISOString().slice(0, 10)
+        let arraynew = []
+        let uniq = []
+        for (e of el.exercises) {
+            let types = await Exercise.find({
+                exerciseName: e,
+                basicExercise: true,
+                username: name
+            }, "exerciseType")
 
 
 
-    let overviewExercises = await Daten.find({
-        exerciseDate:
-        {
-            $gte: prevDate,
-            $lt: acDate
-        },
-        basicExercise: false,
-        username: name
-    })
+            arraynew.push(types[0].exerciseType)
 
-    res.send({ overviewExercises })
+            //Dopplungen rauswerfen
+            uniq = [...new Set(arraynew)];
+
+
+        }
+        let allDaten = {};
+        allDaten["dateshort"] = dateshort
+        allDaten["value"] = uniq
+
+        everyData.push(allDaten)
+    }
+
+
+
+    res.send({ everyData })
 
 })
 app.get("/Datenbank/selectName", checkAuthenticated, async (req, res) => {

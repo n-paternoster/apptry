@@ -39,38 +39,33 @@ overviewData.addEventListener("click", async (evt) => {
 
     })
 
-    const overviewData = document.getElementById("accBodyTwo")
+    const overviewData = document.getElementById("overViewTable")
+    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let allData = res.data.everyData
 
-    let allData = res.data.overviewExercises
+    for (el of allData) {
+        let row = document.createElement("tr")
+        let col1 = document.createElement("th")
+        let col2 = document.createElement("th")
+        let col3 = document.createElement("th")
+        let date = new Date(el.dateshort)
+
+        col1.innerText = date.toISOString().slice(0, 10)
+        col2.innerText = days[date.getDay()]
+        col3.innerText = el.value
+
+        row.appendChild(col1)
+        row.appendChild(col2)
+        row.appendChild(col3)
+        overviewData.appendChild(row)
+
+
+    }
+
     console.log(allData)
+    console.log(overviewData)
 
-    //Daten werden in 2 direkt voneinander abhänigen Arrys aufgeteilt dates+uniqueex
-    let groupedData = d3.nest()
-        .key(function (d) { return d.exerciseDate; })
-        .entries(allData);
-    let allDates = [];
-    let exercises = []
-    for (arr of groupedData) {
-        for (val of arr.values) {
-            exercises.push(val.exerciseName)
-            allDates.push(arr.key)
-        }
-    }
-    let uniqueEx = [...new Set(exercises)];
-    let indexes = [];
-    let dates = []
-    for (ob of uniqueEx) {
-        let index = exercises.indexOf(ob)
-        indexes.push(index)
 
-    }
-    for (i of indexes) {
-        let date = allDates[i]
-        dates.push(date)
-
-    }
-    console.log(dates)
-    console.log(uniqueEx)
 
 
 })

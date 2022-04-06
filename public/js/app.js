@@ -71,8 +71,8 @@ for (let obj of addExercises) {
         inputStyle.appendChild(option8);
 
         let option9 = document.createElement("option")
-        option8.value = "Cardio";
-        option8.innerText = "Cardio";
+        option9.value = "Cardio";
+        option9.innerText = "Cardio";
         inputStyle.appendChild(option9);
 
         inputName.setAttribute("type", "string")

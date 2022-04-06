@@ -10,3 +10,25 @@ function init() {
             })
     }
 }
+
+//Überprüfen des Localstorage ob heute Übungen augewählt wurden
+document.addEventListener("DOMContentLoaded", function (event) {
+    let actualDateLong = new Date();
+    let acDate = actualDateLong.toISOString().slice(0, 10);
+
+
+    let storedDate = window.localStorage.getItem("dateDay")
+
+    if (storedDate !== acDate) {
+        window.localStorage.clear()
+
+    } else {
+
+        let startAnker = document.getElementById("startWorkout")
+        startAnker.innerText = 'Back to Work !'
+        startAnker.href = window.localStorage.query
+
+    };
+
+})
+

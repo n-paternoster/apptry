@@ -1,6 +1,13 @@
 
 // const allBodyparts = ["Biceps", "Triceps", "Legs", "Chest", "Abdominal", "Shoulders", "Lower Back", "Upper Back"]
+const addChange = document.querySelectorAll('.changeType');
+for (let obj of addChange) {
 
+    obj.addEventListener('click', (evt) => {
+        window.location.replace("/Exercises")
+
+    })
+}
 //neue Übung in pickable Exercise machen
 const addExercises = document.querySelectorAll('.addExercise');
 for (let obj of addExercises) {
@@ -64,8 +71,8 @@ for (let obj of addExercises) {
         inputStyle.appendChild(option8);
 
         let option9 = document.createElement("option")
-        option8.value = "Cardio";
-        option8.innerText = "Cardio";
+        option9.value = "Cardio";
+        option9.innerText = "Cardio";
         inputStyle.appendChild(option9);
 
         inputName.setAttribute("type", "string")
@@ -356,5 +363,4 @@ for (touch of touchsurface) {
 
 
 }
-
 

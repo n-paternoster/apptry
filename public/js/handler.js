@@ -31,15 +31,20 @@ weightinputElement.addEventListener("click", (evt) => {
     }
 })
 
-const overviewData = document.getElementById("overviewButton")
-overviewData.addEventListener("click", async (evt) => {
+const overviewButton = document.getElementById("overviewButton")
+
+overviewButton.addEventListener("click", async (evt) => {
+    const overviewData = document.getElementById("overViewTable")
+    if (overviewData.children[1].firstChild) {
+        overviewData.children[1].replaceChildren();
+    }
     let res = await axios({
         method: 'get',
         url: '/Datenbank/getOverview',
 
     })
 
-    const overviewData = document.getElementById("overViewTable")
+
     let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     let allData = res.data.everyData
     let newestDates = []

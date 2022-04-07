@@ -205,3 +205,10 @@ thead {
   margin-left: auto;
   margin-right: auto;
 }
+
+.form-control {
+
+  border: 0 !important;
+  margin-top: 0.2em !important;
+  margin-bottom: 0.2em !important;
+}

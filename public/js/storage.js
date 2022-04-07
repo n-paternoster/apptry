@@ -1,5 +1,5 @@
 let query = window.location
-console.log(query)
+
 let actualDateLong = new Date();
 let acDate = actualDateLong.toISOString().slice(0, 10);
 

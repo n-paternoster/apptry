@@ -337,8 +337,7 @@ app.get("/Datenbank/getOverview", checkAuthenticated, async (req, res) => {
     actualMyDate.setTime(actualMyDate.getTime() + dateOnset);
     let acDate = actualMyDate.toISOString().slice(0, 10);
     let prevDate = actualDateLong.toISOString().slice(0, 10);
-    console.log(acDate)
-    console.log(prevDate)
+
     let everyData = []
     let disValue = await Daten.aggregate
         ([

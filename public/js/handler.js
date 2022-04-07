@@ -1,7 +1,7 @@
 const weightinputElement = document.getElementById("saveWeightButton")
 weightinputElement.addEventListener("click", (evt) => {
     if (weightinputElement.previousElementSibling.value.length != 0) {
-        console.log(weightinputElement.previousElementSibling.value)
+
         let weightData = evt.target.previousElementSibling.value
         let today = new Date();
         let eDate = today.toISOString().slice(0, 10);  //aktuelles Datum in Year/month/day
@@ -61,8 +61,7 @@ overviewData.addEventListener("click", async (evt) => {
         let col3 = document.createElement("th")
         let day = days[newestDates[i].getDay()]
         for (j = 0; j < allData.length; j++) {
-            console.log(newestDates[i].toISOString().slice(0, 10))
-            console.log(allData[j].dateshort)
+
             if (newestDates[i].toISOString().slice(0, 10) === allData[j].dateshort) {
                 col3.innerText = allData[j].value;
 

@@ -110,24 +110,24 @@
                                         <th colspan="3">Today's Values</th>
                                     </tr>
                                 </thead>
-                                <tbody id="TodayTable<%=nameArray[i].replace(/\s/g, "").replace(/[()]/g, '')%>">
+                                <tbody id="TodayTable<%=nameArray[i].replace(/\s/g, "").replace(/[\/"'#{()}[\]]/g, '')%>">
                                     <tr class="tr-First">
 
                                     </tr>
-                                    <% if (typeof todaysdata !=='0' && todaysdata.length> 0) {
-                                        for(let r=0 ; r < todaysdata[i].length ; r++) {%>
-                                            <tr>
-                                                <td>
-                                                    <%= todaysdata[i][r].exerciseSet %>.
-                                                </td>
-                                                <td>
-                                                    <%= todaysdata[i][r].exerciseWeight %> kg
-                                                </td>
-                                                <td>
-                                                    x <%= todaysdata[i][r].exerciseRep %>
-                                                </td>
-                                            </tr>
-                                            <% }} %>
+                                    <% if (typeof todaysdata !==' 0' && todaysdata.length> 0) {
+                                    for(let r=0 ; r < todaysdata[i].length ; r++) {%>
+                                        <tr>
+                                            <td>
+                                                <%= todaysdata[i][r].exerciseSet %>.
+                                            </td>
+                                            <td>
+                                                <%= todaysdata[i][r].exerciseWeight %> kg
+                                            </td>
+                                            <td>
+                                                x <%= todaysdata[i][r].exerciseRep %>
+                                            </td>
+                                        </tr>
+                                        <% }} %>
                                 </tbody>
 
 

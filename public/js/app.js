@@ -171,7 +171,7 @@ function saveButtonListener(btn) {
         let eWeight = evt.target.parentElement.children[0].value // exerciseWeight
         let eRep = evt.target.parentElement.children[1].value // exerciseRep
 
-        let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''))
+        let setCount = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[\/"'#{()}[\]]/g, ''))
         let setNum = setCount.children.length;
         //Leere inputs verhidnern
         if (typeof eWeight !== 'undefined' && eWeight.length > 0 && typeof eRep !== 'undefined' && eRep.length > 0) {
@@ -212,7 +212,7 @@ function saveButtonListener(btn) {
 
 
 
-                        const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[()]/g, ''));
+                        const table = document.querySelector('#TodayTable' + eName.replace(/\s/g, "").replace(/[\/"'#{()}[\]]/g, ''));
                         //Set Counter in Overview
                         let counter = table.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].children[0].children[1]
                         counter.innerText = `${setNum} / 3`;

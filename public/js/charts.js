@@ -118,6 +118,7 @@ async function createWeightGraph() {
                 datasets: [{
                     data: weights,
                     borderColor: "#efeff1",
+                    tension: 0.2
                 }]
             },
             options: {
@@ -292,7 +293,7 @@ async function createTimeData() {
 
 
 //Auswählbarer Übungsgraph
-function createGraph(dataName, Data, selectedRange) {
+function createGraph(dataName, Data, selectedRange, Name) {
 
     //Aufteilen aller Übung auf einzelne Tage
     let dataset = Data.selectedData
@@ -307,6 +308,7 @@ function createGraph(dataName, Data, selectedRange) {
         })
         .entries(sortedDada);
     //Aufteilen der Daten in X und Y Array
+    
     let weights = [];
     let dateLabel = [];
     for (obj of nestedMeanWeight) {
@@ -327,7 +329,7 @@ function createGraph(dataName, Data, selectedRange) {
     else {
         dynMin = min
     }
-    const chart = document.getElementById("myChart")
+    const chart = document.getElementById("myChart"+ dataName)
     let linechart = new Chart(chart, {
         type: "line",
         data: {
@@ -336,11 +338,13 @@ function createGraph(dataName, Data, selectedRange) {
 
                 data: weights,
                 borderColor: "#FFFFFF",
+                tension: 0.2
 
             }]
 
         },
         options: {
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: false
@@ -379,10 +383,27 @@ function createGraph(dataName, Data, selectedRange) {
 
 }
 
-const selectExercise = document.querySelectorAll('.selectExerc');
+const selectExercise = document.getElementById("selectExerc")
 //chartSelections auswählen der zu untersuchenden Uebungen
-for (let obj of selectExercise) {
-    obj.addEventListener('change', async function (evt) {
+
+
+    
+selectExercise.addEventListener('change', 
+    async function (evt) {
+      let graphDeleter = evt.target.parentElement.nextElementSibling
+      
+      if (graphDeleter instanceof HTMLScriptElement) {
+       
+        }
+    else{
+        console.log("else")
+        let oldCanvas = document.querySelectorAll('.container')
+        console.log(oldCanvas)
+        for(el of oldCanvas){
+            el.remove()
+        }
+
+    }
         //Data
         let selType = evt.target.options[evt.target.selectedIndex].value
         let dataObject = { exerciseType: selType }
@@ -395,151 +416,104 @@ for (let obj of selectExercise) {
         })
 
 
-        //Create Exercise Select & Button
-        let newDiv = document.createElement("div");
-        newDiv.setAttribute("class", "nameDiv")
 
-
-        let inputStyle = document.createElement("select");
-        inputStyle.setAttribute("class", "smallSelect")
-        let newButton = document.createElement("button");
-        newDiv.appendChild(inputStyle);
-        newDiv.appendChild(newButton);
-        inputStyle.classList.toggle("form-select");
-        newButton.innerText = "Show Chart";
-        newButton.className = "selcSpefExcer buttonAll";
-        let dummyoption = document.createElement("option")
-
-        inputStyle.appendChild(dummyoption);
-        //Exercise Check
         if (res.data.selectedExercises.length !== 0) {
-
-            dummyoption.innerText = "2. Select Exercise"
-
-
-
+        
             for (el of res.data.selectedExercises) {
+               
+                
+               
                 let Name = el.exerciseName;
-                let option = document.createElement("option")
-                option.value = Name
-                option.innerText = Name
-                inputStyle.appendChild(option);
+                let dataObject = { exerciseName: Name }
 
-                let place = evt.target.parentElement;
+                const res = await axios({
+                    method: 'get',
+                    url: '/Datenbank/selectName',
+                    params: dataObject,
+                })
+                
 
-                place.insertBefore(newDiv, evt.target.nextSibling)
 
-            }
+                //GraphElement
+                let div = document.createElement("div")
+                let canvasdiv = document.createElement("div")
+                let rangeSelect = document.createElement("select")
+                rangeSelect.setAttribute("id", "rangeSelector"+ Name)
+                rangeSelect.setAttribute("class", "smallSelect", "rangeSelector")
+                let option1m = document.createElement("option")
+                option1m.innerText = "1 Month"
+                option1m.value = 1 * 30 * 24 * 60 * 60 * 1000
+                let option3m = document.createElement("option")
+                option3m.innerText = "3 Month"
+                option3m.value = 3 * 30 * 24 * 60 * 60 * 1000
+                let option6m = document.createElement("option")
+                option6m.innerText = "6 Month"
+                option6m.value = 6 * 30 * 24 * 60 * 60 * 1000
+                let option12m = document.createElement("option")
+                option12m.innerText = "1 Year"
+                option12m.value = 12 * 30 * 24 * 60 * 60 * 1000
+                let optionAll = document.createElement("option")
+                optionAll.innerText = "All"
+                optionAll.value = 0
+                let label = document.createElement("label")
+                label.setAttribute("for", "rangeSelector")
+                label.innerText = "Time range: "
+                rangeSelect.appendChild(optionAll)
+                rangeSelect.appendChild(option1m)
+                rangeSelect.appendChild(option3m)
+                rangeSelect.appendChild(option6m)
+                rangeSelect.appendChild(option12m)
+                div.setAttribute("class", "container deleter")
+                canvasdiv.setAttribute("class", "canvasdiv")
+
+
+
+                //Canvas
+                let canvas = document.createElement("canvas")
+                canvas.setAttribute("id", "myChart"+ Name)
+
+
+                canvasdiv.appendChild(canvas)
+                div.appendChild(canvasdiv)
+                div.appendChild(label)
+                div.appendChild(rangeSelect)
+                evt.target.parentElement.parentElement.insertBefore(div, evt.target.parentElement.nextElementSibling)
+
+              
+
+                let range = []
+                const selectRange = document.getElementById("rangeSelector"+ Name)
+                
+                selectRange.addEventListener("change", (evt) => {
+
+                    range = evt.target.options[evt.target.selectedIndex].value
+                    
+                    let canvas = evt.target.previousElementSibling.previousElementSibling.firstChild
+                    if (canvas) {
+                        canvas.remove()
+                    }
+
+                    let newCanvas = document.createElement("canvas")
+                    newCanvas.setAttribute("id", "myChart"+ Name)
+                    evt.target.parentElement.firstChild.appendChild(newCanvas)
+             
+                    createGraph(Name, res.data, range);
+                })
+                
+                
+            createGraph(Name, res.data, range);
+            canvas.scrollIntoView()
+
+        }
         } else {
 
             dummyoption.innerText = "No Data found &#128532"
 
         }
-        let selectName = [];
-        const searchExerciseData = document.querySelectorAll('.selcSpefExcer');
-        for (let obj of searchExerciseData) {
-            obj.addEventListener('click', async function (evt) {
-                if (evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value != "2. Select Exercise" && "No Data found &#128532") {
-                    evt.target.setAttribute('disabled', 'disabled')
-                    //Ersetzen der vorherigen Graphen
-                    let existChart = evt.target.parentElement.nextElementSibling
-                    if (existChart !== null) {
-                        let oldChart = evt.target.parentElement.parentElement.lastChild
-                        oldChart.remove()
-                    }
-
-                    //Erstellen Graph HTML Elemente
-                    //Loading Element
-                    let divgif = document.createElement("div")
-                    const img = document.createElement("img");
-                    img.src = 'pics/muskel.gif';
-                    img.style.width = '40%'
-                    evt.target.insertAdjacentElement('afterend', divgif)
-                    divgif.appendChild(img)
-                    //Exercise Name
-                    selectName = evt.target.previousElementSibling.options[evt.target.previousElementSibling.selectedIndex].value
-                    let dataObject = { exerciseName: selectName }
-                    //GET Data
-                    const res = await axios({
-                        method: 'get',
-                        url: '/Datenbank/selectName',
-                        params: dataObject,
-                    })
-                    evt.target.removeAttribute('disabled')
-                    img.remove()
-                    //GraphElement
-                    let div = document.createElement("div")
-                    let rangeSelect = document.createElement("select")
-                    rangeSelect.setAttribute("id", "rangeSelector")
-                    rangeSelect.setAttribute("class", "smallSelect")
-                    let option1m = document.createElement("option")
-                    option1m.innerText = "1 Month"
-                    option1m.value = 1 * 30 * 24 * 60 * 60 * 1000
-                    let option3m = document.createElement("option")
-                    option3m.innerText = "3 Month"
-                    option3m.value = 3 * 30 * 24 * 60 * 60 * 1000
-                    let option6m = document.createElement("option")
-                    option6m.innerText = "6 Month"
-                    option6m.value = 6 * 30 * 24 * 60 * 60 * 1000
-                    let option12m = document.createElement("option")
-                    option12m.innerText = "1 Year"
-                    option12m.value = 12 * 30 * 24 * 60 * 60 * 1000
-                    let optionAll = document.createElement("option")
-                    optionAll.innerText = "All"
-                    optionAll.value = 0
-                    let label = document.createElement("label")
-                    label.setAttribute("for", "rangeSelector")
-                    label.innerText = "Time range: "
-                    rangeSelect.appendChild(optionAll)
-                    rangeSelect.appendChild(option1m)
-                    rangeSelect.appendChild(option3m)
-                    rangeSelect.appendChild(option6m)
-                    rangeSelect.appendChild(option12m)
-
-                    div.setAttribute("class", "container")
-                    let canvas = document.createElement("canvas")
-                    canvas.setAttribute("id", "myChart")
 
 
-                    div.appendChild(canvas)
-                    div.appendChild(label)
-                    div.appendChild(rangeSelect)
-                    evt.target.parentElement.parentElement.insertBefore(div, evt.target.parentElement.nextElementSibling)
-
-
-
-                    let range = []
-                    const selectRange = document.getElementById("rangeSelector")
-                    selectRange.addEventListener("change", (evt) => {
-
-                        let selectedRange = evt.target.options[evt.target.selectedIndex].value
-                        range = selectedRange
-                        let canvas = evt.target.previousElementSibling.previousElementSibling
-                        if (canvas) {
-                            canvas.remove()
-                        }
-
-                        let newCanvas = document.createElement("canvas")
-                        newCanvas.setAttribute("id", "myChart")
-                        evt.target.parentElement.insertBefore(newCanvas, evt.target.previousElementSibling)
-
-                        createGraph(selectName, res.data, range);
-                    })
-                    createGraph(selectName, res.data, range);
-                    canvas.scrollIntoView()
-                }
-            })
-
-        }
-        //Ersetzen der vorher ausgewählten Übungen
-
-        let oldName = document.querySelectorAll(".nameDiv")
-        if (oldName[1] !== undefined) {
-            oldName[1].remove();
-        }
-
+        
 
     })
-}
 
-const date = new Date();
+

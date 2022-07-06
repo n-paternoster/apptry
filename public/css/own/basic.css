@@ -136,12 +136,22 @@ textarea:disabled {
     text-align: center;
     color: #efeff1;
     background-color: #1F1F23 !important;
+    margin-top: 0.5%;
 
 }
 
 #myChart {
     color: #efeff1;
     background-color: #2b2b30;
+    height: 90%;
+
+
+}
+
+#myTimeChart {
+    color: #efeff1;
+    background-color: #2b2b30;
+    height: 90%;
 
 
 }
@@ -354,4 +364,8 @@ a {
 
 .accordionButton {
     font-size: 3rem;
+}
+
+.canvasdiv {
+    height: 90%;
 }
